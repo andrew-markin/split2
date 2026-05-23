@@ -1,0 +1,14 @@
+# Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Environment
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build
+dist/

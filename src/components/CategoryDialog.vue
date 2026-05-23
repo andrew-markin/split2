@@ -1,0 +1,74 @@
+<template>
+  <dialog-frame :title="category?.id ? 'Category' : 'New Category'">
+    <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
+      <q-input
+        v-model.trim="form.name"
+        outlined
+        counter
+        stack-label
+        label="Name"
+        :maxlength="16"
+        lazy-rules="ondemand"
+        :rules="nameRules"
+        no-error-icon
+      />
+    </q-form>
+    <participation-select
+      :category="form.id"
+      @changes="(value) => (participationChanges = value)"
+    />
+    <template #buttons>
+      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
+      <q-btn
+        unelevated
+        type="submit"
+        form="form"
+        color="primary"
+        label="Save"
+        :disable="!changesAvailable"
+      />
+    </template>
+  </dialog-frame>
+</template>
+
+<script setup>
+import { computed, ref } from 'vue'
+import { z } from 'zod'
+
+import { useForm } from '@/composables/useForm'
+import { useSplit } from '@/composables/useSplit'
+import { useValidator } from '@/composables/useValidator'
+
+import DialogFrame from './DialogFrame.vue'
+import ParticipationSelect from './ParticipationSelect.vue'
+
+const { category } = defineProps({ category: { type: Object, default: () => {} } })
+const emit = defineEmits(['close'])
+
+const { form, changes, changed } = useForm({ ...category })
+
+const participationChanges = ref([])
+
+const changesAvailable = computed(() => changed.value || participationChanges.value.length > 0)
+const combinedChanges = computed(() => {
+  const result = {}
+  if (changed.value) result.categories = [changes.value]
+  if (participationChanges.value.length > 0) result.participations = participationChanges.value
+  return result
+})
+
+const nameSchema = z
+  .string('Name is required')
+  .min(1, 'Name is required')
+  .regex(/^[\p{L}\p{P}\d\s]+$/u, 'Only letters, punctuation, hyphens, brackets and spaces allowed')
+
+const nameRules = [useValidator(nameSchema)]
+
+const { upsert } = useSplit()
+
+async function submit() {
+  if (!changesAvailable.value) return
+  await upsert(combinedChanges.value)
+  emit('close')
+}
+</script>
