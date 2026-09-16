@@ -2,7 +2,7 @@ import { Mutex } from 'async-mutex'
 import { computed, ref, shallowRef, toRaw, triggerRef, watch } from 'vue'
 import z from 'zod'
 
-import { getCipher, getNonce, getRandomId } from '@/utils'
+import { getCipher, getNonce, getRandomId, sortByFields } from '@/utils'
 
 import { useBlob } from './useBlob'
 import { useStorage } from './useStorage'
@@ -153,15 +153,7 @@ function useContext() {
       const result = (dataset.value[collectionName] ?? [])
         .filter(({ removed }) => !removed)
         .map(deflate)
-      if (sortFields.length > 0) {
-        result.sort((left, right) => {
-          for (const field of sortFields) {
-            const result = String(left[field]).localeCompare(String(right[field]))
-            if (result !== 0) return result
-          }
-          return 0
-        })
-      }
+      sortByFields(result, sortFields)
       return result
     })
   }

@@ -107,3 +107,14 @@ export async function unpackValue(data, secret) {
   const stringified = decoder.decode(decompressed)
   return JSON.parse(stringified)
 }
+
+export function sortByFields(items, fields = []) {
+  if (fields.length === 0) return
+  items.sort((left, right) => {
+    for (const field of fields) {
+      const result = String(left[field]).localeCompare(String(right[field]))
+      if (result !== 0) return result
+    }
+    return 0
+  })
+}
