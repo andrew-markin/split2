@@ -53,6 +53,7 @@ import { z } from 'zod'
 import { useForm } from '@/composables/useForm'
 import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
+import { amountSchema } from '@/schemas.js'
 
 import CategorySelect from './CategorySelect.vue'
 import DateInput from './DateInput.vue'
@@ -79,15 +80,6 @@ const descriptionSchema = z
 const descriptionRules = [useValidator(descriptionSchema)]
 
 const payerRules = [(value) => !!value || 'Payer is required']
-
-const amountSchema = z
-  .string('Amount is required')
-  .min(1, 'Amount is required')
-  .regex(/^\d+(\.\d{1,2})?$/, {
-    message: 'Amount must be a positive number with up to 2 decimal places'
-  })
-  .transform((value) => Number(value))
-  .refine((value) => value > 0, 'Amount must be greater than 0')
 
 const amountRules = [useValidator(amountSchema)]
 
