@@ -1,6 +1,6 @@
 <template>
   <dialog-frame :title="participant?.id ? 'Participant' : 'New Participant'">
-    <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
+    <q-form id="form" greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <q-input
         v-model.trim="form.name"
         outlined
