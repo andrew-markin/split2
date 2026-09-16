@@ -34,7 +34,7 @@
             <category-label :id="expense.category" placeholder="Common" />
           </td>
           <td class="text-left">
-            <participant-name :participant="expense.payer" placeholder="Undefined" />
+            <participant-label :id="expense.payer" placeholder="Undefined" />
           </td>
           <td class="text-right">{{ expense.amount }}</td>
         </tr>
@@ -56,7 +56,7 @@ import CategoryLabel from './CategoryLabel.vue'
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import DateLabel from './DateLabel.vue'
 import ExpenseDialog from './ExpenseDialog.vue'
-import ParticipantName from './ParticipantName.vue'
+import ParticipantLabel from './ParticipantLabel.vue'
 
 const { expenses, upsert } = useSplit()
 

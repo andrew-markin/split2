@@ -26,7 +26,7 @@
           <td><q-checkbox v-model="selection" :val="participant.id" /></td>
           <td class="text-left">{{ participant.name }}</td>
           <td class="text-left">
-            <participant-name :participant="participant.patron" placeholder="Themselves" />
+            <participant-label :id="participant.patron" placeholder="Themselves" />
           </td>
           <td class="text-left">
             <participation-list :participant="participant.id" />
@@ -48,7 +48,7 @@ import { useSplit } from '@/composables/useSplit'
 
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import ParticipantDialog from './ParticipantDialog.vue'
-import ParticipantName from './ParticipantName.vue'
+import ParticipantLabel from './ParticipantLabel.vue'
 import ParticipationList from './ParticipationList.vue'
 
 const { participants, upsert } = useSplit()
