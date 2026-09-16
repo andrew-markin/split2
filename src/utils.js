@@ -23,12 +23,8 @@ export function getRandomId() {
   return getRandomBase62Key(22)
 }
 
-export async function getComposedId(...parts) {
-  const joined = parts
-    .map((part) => String(part))
-    .sort()
-    .join('\n')
-  const hash = await crypto.subtle.digest('SHA-256', encoder.encode(joined))
+export async function getHashedId(text) {
+  const hash = await crypto.subtle.digest('SHA-256', encoder.encode(text))
   const hashHex = Array.from(new Uint8Array(hash), (byte) =>
     byte.toString(16).padStart(2, '0')
   ).join('')
@@ -39,6 +35,14 @@ export async function getComposedId(...parts) {
     hashBigInt = hashBigInt / 62n
   }
   return base62Chars.reverse().join('').padStart(22, '0').slice(0, 22)
+}
+
+export async function getComposedId(...parts) {
+  const joined = parts
+    .map((part) => String(part))
+    .sort()
+    .join('\n')
+  return getHashedId(joined)
 }
 
 function encodeBase62(value) {
