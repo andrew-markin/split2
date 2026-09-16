@@ -20,4 +20,10 @@ import ScrollArea from '@/components/ScrollArea.vue'
 .muted-2 {
   color: color-mix(in srgb, currentColor 25%, transparent);
 }
+.q-markup-table {
+  outline: none !important;
+}
+.q-markup-table thead th {
+  font-size: 13px;
+}
 </style>

@@ -7,7 +7,7 @@
     <q-markup-table separator="cell" flat bordered>
       <thead>
         <tr>
-          <th><q-checkbox v-model="selectAll" :disable="settlements.length === 0" /></th>
+          <th><q-checkbox v-model="selectAll" size="xs" :disable="settlements.length === 0" /></th>
           <th class="text-left">Sender</th>
           <th class="text-left">Receiver</th>
           <th class="text-left w-100">Receiver Transfer Preferences</th>
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr v-for="(settlement, index) in settlements" :key="index" @click="edit(settlement)">
-          <td><q-checkbox v-model="selection" :val="settlement" /></td>
+          <td><q-checkbox v-model="selection" size="xs" :val="settlement" /></td>
           <td class="text-left">
             <participant-label :id="settlement.sender" />
           </td>

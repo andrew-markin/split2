@@ -15,14 +15,14 @@
     <q-markup-table separator="cell" flat bordered>
       <thead>
         <tr>
-          <th><q-checkbox v-model="selectAll" :disable="categories.length === 0" /></th>
+          <th><q-checkbox v-model="selectAll" size="xs" :disable="categories.length === 0" /></th>
           <th class="text-left">Name</th>
           <th class="text-left w-100">Participants</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="category in categories" :key="category.id" @click="edit(category)">
-          <td><q-checkbox v-model="selection" :val="category.id" /></td>
+          <td><q-checkbox v-model="selection" size="xs" :val="category.id" /></td>
           <td class="text-left">{{ category.name }}</td>
           <td class="text-left"><participation-list :category="category.id" /></td>
         </tr>

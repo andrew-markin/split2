@@ -15,7 +15,7 @@
     <q-markup-table separator="cell" flat bordered>
       <thead>
         <tr>
-          <th><q-checkbox v-model="selectAll" :disable="expenses.length === 0" /></th>
+          <th><q-checkbox v-model="selectAll" size="xs" :disable="expenses.length === 0" /></th>
           <th class="text-left">Date</th>
           <th class="text-left w-100">Description</th>
           <th class="text-left">Category</th>
@@ -25,7 +25,7 @@
       </thead>
       <tbody>
         <tr v-for="expense in expenses" :key="expense.id" @click="edit(expense)">
-          <td><q-checkbox v-model="selection" :val="expense.id" /></td>
+          <td><q-checkbox v-model="selection" size="xs" :val="expense.id" /></td>
           <td class="text-left">
             <date-label :value="expense.date" placeholder="Undefined" />
           </td>

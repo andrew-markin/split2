@@ -15,7 +15,7 @@
     <q-markup-table separator="cell" flat bordered>
       <thead>
         <tr>
-          <th><q-checkbox v-model="selectAll" :disable="transfers.length === 0" /></th>
+          <th><q-checkbox v-model="selectAll" size="xs" :disable="transfers.length === 0" /></th>
           <th class="text-left">Date</th>
           <th class="text-left">Sender</th>
           <th class="text-left">Receiver</th>
@@ -25,7 +25,7 @@
       </thead>
       <tbody>
         <tr v-for="transfer in transfers" :key="transfer.id" @click="edit(transfer)">
-          <td><q-checkbox v-model="selection" :val="transfer.id" /></td>
+          <td><q-checkbox v-model="selection" size="xs" :val="transfer.id" /></td>
           <td class="text-left">
             <date-label :value="transfer.date" placeholder="Undefined" />
           </td>

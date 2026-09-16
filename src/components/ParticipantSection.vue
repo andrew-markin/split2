@@ -15,7 +15,7 @@
     <q-markup-table separator="cell" flat bordered>
       <thead>
         <tr>
-          <th><q-checkbox v-model="selectAll" :disable="participants.length === 0" /></th>
+          <th><q-checkbox v-model="selectAll" size="xs" :disable="participants.length === 0" /></th>
           <th class="text-left">Name</th>
           <th class="text-left">Who pays</th>
           <th class="text-left w-100">Categories</th>
@@ -23,7 +23,7 @@
       </thead>
       <tbody>
         <tr v-for="participant in participants" :key="participant.id" @click="edit(participant)">
-          <td><q-checkbox v-model="selection" :val="participant.id" /></td>
+          <td><q-checkbox v-model="selection" size="xs" :val="participant.id" /></td>
           <td class="text-left">{{ participant.name }}</td>
           <td class="text-left">
             <participant-label :id="participant.patron" placeholder="Themselves" />
