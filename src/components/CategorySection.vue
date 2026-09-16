@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="row items-center q-mb-xs">
-      <span class="text-h5 text-primary q-mr-xs">Categories</span>
+    <div class="row items-center">
+      <span class="text-h5 text-primary q-mr-xs q-my-sm">Categories</span>
       <q-btn flat round color="primary" icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
