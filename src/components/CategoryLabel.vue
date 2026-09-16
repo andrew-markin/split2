@@ -1,0 +1,25 @@
+<template>
+  <template v-if="category">
+    <slot :category="category">
+      <span>{{ category.name }}</span>
+    </slot>
+  </template>
+  <span v-else-if="placeholder" class="muted-2">{{ placeholder }}</span>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+
+import { useSplit } from '@/composables/useSplit'
+
+defineOptions({ inheritAttrs: false })
+
+const { id } = defineProps({
+  id: { type: String, default: undefined },
+  placeholder: { type: String, default: undefined }
+})
+
+const { categoryById } = useSplit()
+
+const category = computed(() => (id ? categoryById(id).value : undefined))
+</script>

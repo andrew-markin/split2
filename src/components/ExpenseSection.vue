@@ -31,7 +31,7 @@
           </td>
           <td class="text-left">{{ expense.description }}</td>
           <td class="text-left">
-            <category-name :category="expense.category" placeholder="Common" />
+            <category-label :id="expense.category" placeholder="Common" />
           </td>
           <td class="text-left">
             <participant-name :participant="expense.payer" placeholder="Undefined" />
@@ -52,7 +52,7 @@ import { computed, ref } from 'vue'
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
 
-import CategoryName from './CategoryName.vue'
+import CategoryLabel from './CategoryLabel.vue'
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import DateLabel from './DateLabel.vue'
 import ExpenseDialog from './ExpenseDialog.vue'
