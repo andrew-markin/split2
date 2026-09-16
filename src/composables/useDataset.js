@@ -147,9 +147,13 @@ function useContext() {
     return result
   }
 
+  function collectionNameIsValid(name) {
+    return collectionNameSchema.safeParse(name).success
+  }
+
   function select(collectionName, sortFields = []) {
     return computed(() => {
-      if (!collectionNameSchema.safeParse(collectionName).success) return []
+      if (!collectionNameIsValid(collectionName)) return []
       const result = (dataset.value[collectionName] ?? [])
         .filter(({ removed }) => !removed)
         .map(deflate)
@@ -160,7 +164,7 @@ function useContext() {
 
   function find(collectionName, id) {
     return computed(() => {
-      if (!collectionNameSchema.safeParse(collectionName).success) return
+      if (!collectionNameIsValid(collectionName)) return
       const collection = dataset.value[collectionName] ?? []
       const document = collection.find((document) => document.id === id)
       if (!document || document.removed) return
@@ -173,7 +177,7 @@ function useContext() {
       if (!theirDataset) return
       datasetSchema.parse(theirDataset)
       Object.entries(theirDataset).forEach(([collectionName, theirCollection]) => {
-        if (!collectionNameSchema.safeParse(collectionName).success) return
+        if (!collectionNameIsValid(collectionName)) return
         let ourCollection = dataset.value[collectionName]
         if (!ourCollection) {
           ourCollection = new Array()
