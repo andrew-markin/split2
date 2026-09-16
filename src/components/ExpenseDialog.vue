@@ -62,9 +62,14 @@ import ParticipantSelect from './ParticipantSelect.vue'
 const { expense } = defineProps({ expense: { type: Object, default: () => {} } })
 const emit = defineEmits(['close'])
 
-const { form, changes, changed } = useForm({ ...expense }, (form) => {
-  if (form.amount !== undefined) form.amount = Number(form.amount).toFixed(2)
-})
+const { form, changes, changed } = useForm(
+  { ...expense },
+  {
+    transform(form) {
+      if (form.amount !== undefined) form.amount = Number(form.amount).toFixed(2)
+    }
+  }
+)
 
 const descriptionSchema = z
   .string('Description is required')
