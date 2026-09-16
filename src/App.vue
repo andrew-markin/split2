@@ -15,9 +15,9 @@ import ScrollArea from '@/components/ScrollArea.vue'
   width: 100%;
 }
 .muted-1 {
-  opacity: 0.6;
+  color: color-mix(in srgb, currentColor 60%, transparent);
 }
 .muted-2 {
-  opacity: 0.25;
+  color: color-mix(in srgb, currentColor 25%, transparent);
 }
 </style>
