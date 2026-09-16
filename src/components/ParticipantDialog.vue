@@ -21,11 +21,11 @@
         placeholder="Themselves"
       />
       <q-input
-        v-model.trim="form.comment"
+        v-model.trim="form.preferences"
         outlined
         counter
         stack-label
-        label="Payment Comment"
+        label="Transfer Preferences"
         :maxlength="64"
       />
     </q-form>

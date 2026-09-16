@@ -1,9 +1,11 @@
 <template>
   <block-container class="q-pa-sm">
-    <div class="column q-gutter-md">
+    <div class="column q-gutter-md q-mb-lg">
       <category-section />
       <participant-section />
       <expense-section />
+      <transfer-section />
+      <settlement-section />
     </div>
   </block-container>
 </template>
@@ -15,6 +17,8 @@ import BlockContainer from '@/components/BlockContainer.vue'
 import CategorySection from '@/components/CategorySection.vue'
 import ExpenseSection from '@/components/ExpenseSection.vue'
 import ParticipantSection from '@/components/ParticipantSection.vue'
+import SettlementSection from '@/components/SettlementSection.vue'
+import TransferSection from '@/components/TransferSection.vue'
 import { useSplit } from '@/composables/useSplit'
 
 const { secret } = defineProps({
