@@ -82,7 +82,6 @@ export async function getCipher(secret, ...salts) {
 }
 
 export async function packValue(data, secret) {
-  const encoder = new TextEncoder()
   const stringified = JSON.stringify(data)
   const compressed = await new Promise((resolve, reject) => {
     gzip(encoder.encode(stringified), (err, result) => (err ? reject(err) : resolve(result)))
