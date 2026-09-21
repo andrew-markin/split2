@@ -13,7 +13,7 @@
         :model-value="receiver.preferences"
         outlined
         stack-label
-        label="Receiver Transfer Preferences"
+        label="Transfer Preferences"
         readonly
       />
       <q-input :model-value="form.amount" outlined stack-label label="Amount" readonly />
