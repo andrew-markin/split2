@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div class="row items-center">
-      <span class="text-h5 text-primary q-mr-xs q-my-sm">Transfers</span>
-      <q-btn flat round color="primary" icon="mdi-plus" @click="edit()" />
+    <div class="row items-center text-primary">
+      <span class="text-h6 q-mr-xs q-my-sm">Transfers</span>
+      <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
         flat
@@ -24,7 +24,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="transfer in transfers" :key="transfer.id" @click="edit(transfer)">
+        <tr
+          v-for="transfer in transfers"
+          :key="transfer.id"
+          class="non-selectable cursor-pointer"
+          @click="edit(transfer)"
+        >
           <td><q-checkbox v-model="selection" size="xs" :val="transfer.id" /></td>
           <td class="text-left">
             <date-label :value="transfer.date" placeholder="Undefined" />

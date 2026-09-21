@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div class="row items-center">
-      <span class="text-h5 text-primary q-mr-xs q-my-sm">Settlements</span>
-      <q-btn flat round color="primary" icon="mdi-content-copy" @click="copy()" />
+    <div class="row items-center text-primary">
+      <span class="text-h6 q-mr-xs q-my-sm">Settlements</span>
+      <q-btn flat round icon="mdi-content-copy" @click="copy()" />
     </div>
     <q-markup-table separator="cell" flat bordered>
       <thead>
@@ -10,12 +10,17 @@
           <th><q-checkbox v-model="selectAll" size="xs" :disable="settlements.length === 0" /></th>
           <th class="text-left">Sender</th>
           <th class="text-left">Receiver</th>
-          <th class="text-left w-100">Receiver Transfer Preferences</th>
+          <th class="text-left w-100">Transfer Preferences</th>
           <th class="text-right">Amount</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(settlement, index) in settlements" :key="index" @click="edit(settlement)">
+        <tr
+          v-for="(settlement, index) in settlements"
+          :key="index"
+          class="non-selectable cursor-pointer"
+          @click="edit(settlement)"
+        >
           <td><q-checkbox v-model="selection" size="xs" :val="settlement" /></td>
           <td class="text-left">
             <participant-label :id="settlement.sender" />

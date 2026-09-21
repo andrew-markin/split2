@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div class="row items-center">
-      <span class="text-h5 text-primary q-mr-xs q-my-sm">Categories</span>
-      <q-btn flat round color="primary" icon="mdi-plus" @click="edit()" />
+    <div class="row items-center text-primary">
+      <span class="text-h6 q-mr-xs q-my-sm">Categories</span>
+      <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
         flat
@@ -21,7 +21,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="category in categories" :key="category.id" @click="edit(category)">
+        <tr
+          v-for="category in categories"
+          :key="category.id"
+          class="non-selectable cursor-pointer"
+          @click="edit(category)"
+        >
           <td><q-checkbox v-model="selection" size="xs" :val="category.id" /></td>
           <td class="text-left">{{ category.name }}</td>
           <td class="text-left"><participation-list :category="category.id" /></td>
