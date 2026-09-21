@@ -16,11 +16,11 @@
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="expenses.length === 0" /></th>
-          <th class="text-left">Date</th>
-          <th class="text-left w-100">Description</th>
-          <th class="text-left">Category</th>
-          <th class="text-left">Payer</th>
-          <th class="text-right">Amount</th>
+          <th class="w-15ch text-left">Date</th>
+          <th class="w-full text-left">Description</th>
+          <th class="w-15ch text-left">Category</th>
+          <th class="w-15ch text-left">Payer</th>
+          <th class="w-10ch text-right">Amount</th>
         </tr>
       </thead>
       <tbody>

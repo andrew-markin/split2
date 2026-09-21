@@ -16,8 +16,8 @@
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="categories.length === 0" /></th>
-          <th class="text-left">Name</th>
-          <th class="text-left w-100">Participants</th>
+          <th class="w-15ch text-left">Name</th>
+          <th class="w-full text-left">Participants</th>
         </tr>
       </thead>
       <tbody>

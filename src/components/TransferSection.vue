@@ -16,11 +16,11 @@
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="transfers.length === 0" /></th>
-          <th class="text-left">Date</th>
-          <th class="text-left">Sender</th>
-          <th class="text-left">Receiver</th>
-          <th class="text-left w-100">Comment</th>
-          <th class="text-right">Amount</th>
+          <th class="w-15ch text-left">Date</th>
+          <th class="w-15ch text-left">Sender</th>
+          <th class="w-15ch text-left">Receiver</th>
+          <th class="w-full text-left">Comment</th>
+          <th class="w-10ch text-right">Amount</th>
         </tr>
       </thead>
       <tbody>

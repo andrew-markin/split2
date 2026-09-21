@@ -16,9 +16,9 @@
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="participants.length === 0" /></th>
-          <th class="text-left">Name</th>
-          <th class="text-left">Who pays</th>
-          <th class="text-left w-100">Categories</th>
+          <th class="w-15ch text-left">Name</th>
+          <th class="w-15ch text-left">Who pays</th>
+          <th class="w-full text-left">Categories</th>
         </tr>
       </thead>
       <tbody>
