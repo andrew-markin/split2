@@ -4,6 +4,8 @@ import '@quasar/extras/animate/slideInDown.css'
 import '@quasar/extras/roboto-font/roboto-font.css'
 import '@quasar/extras/mdi-v7/mdi-v7.css'
 import 'quasar/src/css/index.sass'
+import '@/styles/overrides.scss'
+import '@/styles/common.scss'
 
 import { Quasar } from 'quasar'
 import quasarMdiIconSet from 'quasar/icon-set/mdi-v7'
