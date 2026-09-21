@@ -3,10 +3,12 @@ import { computed, shallowRef, watchEffect } from 'vue'
 import { useDataset } from '@/composables/useDataset'
 import { sortByFields } from '@/utils'
 
+const NULL_ID = '0000000000000000000000'
+
 let context
 
 function useContext() {
-  const { constrain, connect, modified, select, upsert } = useDataset()
+  const { constrain, connect, modified, select, upsert, find } = useDataset()
 
   constrain({
     participations: {
@@ -19,6 +21,13 @@ function useContext() {
       payer: { scope: 'participants', fix: 'remove' },
       category: { scope: 'categories', fix: 'unset' }
     }
+  })
+
+  const config = find('config', NULL_ID)
+
+  const title = computed({
+    get: () => config?.value?.title,
+    set: (value) => upsert({ config: [{ id: NULL_ID, title: value }] })
   })
 
   const categories = select('categories', ['name', 'id'])
@@ -233,6 +242,7 @@ function useContext() {
     participants,
     participations,
     settlements,
+    title,
     transfers,
     upsert
   }

@@ -1,5 +1,6 @@
 import '@quasar/extras/animate/fadeIn.css'
 import '@quasar/extras/animate/fadeOut.css'
+import '@quasar/extras/animate/zoomOut.css'
 import '@quasar/extras/animate/slideInDown.css'
 import '@quasar/extras/roboto-font/roboto-font.css'
 import '@quasar/extras/mdi-v7/mdi-v7.css'

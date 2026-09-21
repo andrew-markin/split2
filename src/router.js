@@ -1,15 +1,15 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import { getRandomSecret } from '@/utils'
-import MainView from '@/views/MainView.vue'
+import SplitView from '@/views/SplitView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      name: 'main',
+      name: 'split',
       path: '/:secret([a-zA-Z0-9]{43})',
-      component: MainView,
+      component: SplitView,
       props: (route) => ({
         secret: route.params.secret
       })
@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       redirect: {
-        name: 'main',
+        name: 'split',
         params: { secret: getRandomSecret() }
       }
     }
