@@ -14,8 +14,8 @@
       <q-space />
     </block-container>
   </div>
-  <scroll-area class="content bg-grey-2">
-    <block-container class="q-pa-sm">
+  <scroll-area class="content bg-grey-2" :vertical-offset="[60, 0]">
+    <block-container class="q-pa-sm" style="margin-top: 60px">
       <div class="column q-gutter-sm q-mb-lg">
         <category-section />
         <participant-section />
@@ -68,11 +68,14 @@ async function edit() {
   height: 60px;
   padding-bottom: 1;
   border-bottom: 1px solid $separator-color;
+  backdrop-filter: blur(8px);
+  background-color: oklab(1 0 5.96046e-8 / 0.75);
+  z-index: 2;
 }
 .content {
   position: absolute;
   left: 0px;
-  top: 60px;
+  top: 0px;
   right: 0px;
   bottom: 0px;
 }
