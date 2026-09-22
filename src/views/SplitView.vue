@@ -12,6 +12,9 @@
         </transition>
       </div>
       <q-space />
+      <q-btn unelevated color="grey-2" text-color="primary" icon="mdi-menu" class="q-pa-sm">
+        <split-menu />
+      </q-btn>
     </block-container>
   </div>
   <scroll-area class="content bg-grey-2" :vertical-offset="[60, 0]">
@@ -37,6 +40,7 @@ import ParticipantSection from '@/components/ParticipantSection.vue'
 import ScrollArea from '@/components/ScrollArea.vue'
 import SettlementSection from '@/components/SettlementSection.vue'
 import SplitDialog from '@/components/SplitDialog.vue'
+import SplitMenu from '@/components/SplitMenu.vue'
 import TransferSection from '@/components/TransferSection.vue'
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'

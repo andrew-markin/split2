@@ -79,10 +79,14 @@ function useContext() {
     }
   }
 
+  async function getStorageAnchor(secret) {
+    return await getCipher(secret, CIPHER_SALT, 'STORAGE_ANCHOR')
+  }
+
   async function connect(secret) {
     const release = await mutex.acquire()
     try {
-      anchor = await getCipher(secret, CIPHER_SALT, 'STORAGE_ANCHOR')
+      anchor = await getStorageAnchor(secret)
       changed.value = undefined
       version.value = undefined
       dataset.value = {}
@@ -106,6 +110,14 @@ function useContext() {
       dataset: dataset.value,
       version: version.value,
       changed: changed.value
+    })
+  }
+
+  async function duplicate(secret) {
+    const anchor = await getStorageAnchor(secret)
+    storage.set(`split:state:${anchor}`, {
+      dataset: dataset.value,
+      changed: Date.now()
     })
   }
 
@@ -318,6 +330,7 @@ function useContext() {
   return {
     connect,
     constrain,
+    duplicate,
     find,
     modified,
     select,
