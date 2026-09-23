@@ -11,5 +11,9 @@ export function useStorage() {
     localStorage.setItem(key, JSON.stringify(value))
   }
 
-  return { get, set }
+  function remove(key) {
+    localStorage.removeItem(key)
+  }
+
+  return { get, set, remove }
 }

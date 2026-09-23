@@ -31,7 +31,7 @@ setTimeout(() => (ready.value = true), 0)
 
 <style scoped>
 .backdrop {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #80808080;
   pointer-events: all;
   z-index: -1;
 }

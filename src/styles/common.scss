@@ -7,9 +7,40 @@
 .w-full {
   width: 100%;
 }
-.muted-1 {
-  color: color-mix(in srgb, currentColor 60%, transparent);
+
+@mixin dark-theme-force {
+  & {
+    @content;
+  }
+  .body--dark & {
+    @content;
+  }
 }
+
+.muted-1 {
+  @include dark-theme-force {
+    color: color-mix(in srgb, currentColor 75%, transparent);
+  }
+}
+
 .muted-2 {
-  color: color-mix(in srgb, currentColor 25%, transparent);
+  @include dark-theme-force {
+    color: color-mix(in srgb, currentColor 60%, transparent);
+  }
+}
+
+.muted-3 {
+  @include dark-theme-force {
+    color: color-mix(in srgb, currentColor 25%, transparent);
+  }
+}
+
+::selection {
+  background: $primary;
+  color: #fff;
+}
+
+::-moz-selection {
+  background: $primary;
+  color: #fff;
 }

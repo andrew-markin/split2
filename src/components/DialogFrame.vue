@@ -1,7 +1,7 @@
 <template>
   <q-card sclass="full-width" style="width: 600px; max-width: 80vw">
     <q-card-section class="q-pb-none">
-      <div class="text-h5 text-primary">{{ title }}</div>
+      <div class="text-h5 muted-1">{{ title }}</div>
     </q-card-section>
     <q-card-section>
       <slot></slot>

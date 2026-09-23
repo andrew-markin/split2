@@ -1,10 +1,10 @@
 <template>
-  <div class="header column justify-center">
-    <block-container class="text-h5 text-primary q-px-sm row no-wrap items-center">
+  <div class="header column justify-center text-white">
+    <block-container class="text-h5 q-px-sm row no-wrap items-center">
       <div class="non-selectable cursor-pointer ellipsis" @click="edit()">
-        <span class="text-weight-bold q-mr-xs">Split:</span>
+        <span class="text-weight-bold q-mr-sm">Split:</span>
         <span v-if="title">{{ title }}</span>
-        <span v-else class="muted-1">Untitled</span>
+        <span v-else class="muted-2">Untitled</span>
       </div>
       <div class="relative-position full-height q-mx-md">
         <transition leave-active-class="animated zoomOut">
@@ -12,13 +12,13 @@
         </transition>
       </div>
       <q-space />
-      <q-btn unelevated color="grey-2" text-color="primary" icon="mdi-menu" class="q-pa-sm">
+      <q-btn unelevated icon="mdi-menu" class="q-pa-sm btn-menu">
         <split-menu />
       </q-btn>
     </block-container>
   </div>
-  <scroll-area class="content bg-grey-2" :vertical-offset="[60, 0]">
-    <block-container class="q-pa-sm" style="margin-top: 60px">
+  <scroll-area class="content bg-base">
+    <block-container class="q-pa-sm">
       <div class="column q-gutter-sm q-mb-lg">
         <category-section />
         <participant-section />
@@ -70,17 +70,20 @@ async function edit() {
   top: 0px;
   right: 0px;
   height: 60px;
-  padding-bottom: 1;
-  border-bottom: 1px solid $separator-color;
-  backdrop-filter: blur(8px);
-  background-color: oklab(1 0 5.96046e-8 / 0.75);
-  z-index: 2;
+  background-color: $primary;
+}
+.btn-menu {
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
 }
 .content {
   position: absolute;
   left: 0px;
-  top: 0px;
+  top: 60px;
   right: 0px;
   bottom: 0px;
+  background-color: $base-color;
+  .body--dark & {
+    background-color: $base-dark-color;
+  }
 }
 </style>

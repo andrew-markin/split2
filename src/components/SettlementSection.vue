@@ -1,10 +1,10 @@
 <template>
   <section>
-    <div class="row items-center text-primary">
+    <div class="row items-center muted-1">
       <span class="text-h6 q-mr-xs q-my-sm">Settlements</span>
       <q-btn flat round icon="mdi-content-copy" @click="copy()" />
     </div>
-    <q-markup-table separator="cell" flat bordered>
+    <q-markup-table separator="cell" flat bordered class="muted-1">
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="settlements.length === 0" /></th>
@@ -40,7 +40,7 @@
           </td>
         </tr>
         <tr v-if="settlements.length === 0">
-          <td colspan="5" class="muted-1 text-center q-td--no-hover">No settlements</td>
+          <td colspan="5" class="muted-2 text-center q-td--no-hover">No settlements</td>
         </tr>
       </tbody>
     </q-markup-table>

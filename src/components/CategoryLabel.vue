@@ -4,7 +4,7 @@
       <span>{{ category.name }}</span>
     </slot>
   </template>
-  <span v-else-if="placeholder" class="muted-2">{{ placeholder }}</span>
+  <span v-else-if="placeholder" class="muted-3">{{ placeholder }}</span>
 </template>
 
 <script setup>

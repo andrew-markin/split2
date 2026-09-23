@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="row items-center text-primary">
+    <div class="row items-center muted-1">
       <span class="text-h6 q-mr-xs q-my-sm">Categories</span>
       <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
@@ -12,7 +12,7 @@
         @click="remove()"
       />
     </div>
-    <q-markup-table separator="cell" flat bordered>
+    <q-markup-table separator="cell" flat bordered class="muted-1">
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="categories.length === 0" /></th>
@@ -32,7 +32,7 @@
           <td class="text-left"><participation-list :category="category.id" /></td>
         </tr>
         <tr v-if="categories.length === 0">
-          <td colspan="3" class="muted-1 text-center q-td--no-hover">No categories</td>
+          <td colspan="3" class="muted-2 text-center q-td--no-hover">No categories</td>
         </tr>
       </tbody>
     </q-markup-table>

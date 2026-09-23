@@ -5,13 +5,12 @@
 </template>
 
 <script setup>
-import { colors } from 'quasar'
 import { computed } from 'vue'
 
 const thumbStyle = computed(() => ({
   borderRadius: '0px',
-  backgroundColor: colors.getPaletteColor('primary'),
+  backgroundColor: '#808080',
   width: '5px',
-  opacity: '0.75'
+  opacity: '0.5'
 }))
 </script>

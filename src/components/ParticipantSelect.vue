@@ -1,12 +1,12 @@
 <template>
   <q-select v-model="model" :options="options" emit-value map-options>
     <template v-if="!model && placeholder" #selected>
-      <div class="muted-1">{{ placeholder }}</div>
+      <div class="muted-2">{{ placeholder }}</div>
     </template>
     <template #option="{ itemProps, opt }">
       <q-item v-bind="itemProps">
         <q-item-section>
-          <q-item-label :class="{ 'muted-1': !opt.value }">
+          <q-item-label :class="{ 'muted-2': !opt.value }">
             {{ opt.label }}
           </q-item-label>
         </q-item-section>

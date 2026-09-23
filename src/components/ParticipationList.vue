@@ -1,6 +1,6 @@
 <template>
   <span v-if="labels.length > 0">{{ labels.join(', ') }}</span>
-  <span v-else class="muted-2">None</span>
+  <span v-else class="muted-3">None</span>
 </template>
 
 <script setup>

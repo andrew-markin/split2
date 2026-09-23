@@ -1,6 +1,6 @@
 <template>
   <div v-if="options.length > 0" class="column q-gutter-y-sm">
-    <div class="text-h6 text-primary">{{ title }}</div>
+    <div class="text-h6 muted-1">{{ title }}</div>
     <div v-for="option in options" :key="option.id" class="row q-col-gutter-x-sm items-center">
       <q-checkbox v-model="option.active" :label="option.label" class="col-5" />
       <q-slider
@@ -11,7 +11,7 @@
         :disable="!option.active"
         class="col"
       />
-      <div class="col-1 text-body1 text-right q-mx-md" :class="{ 'muted-2': !option.active }">
+      <div class="col-1 text-body1 text-right q-mx-md" :class="{ 'muted-3': !option.active }">
         {{ option.rate }}%
       </div>
     </div>

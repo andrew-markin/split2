@@ -3,7 +3,7 @@
     <template #control>
       <div
         class="self-center full-width no-outline text-no-wrap"
-        :class="{ 'muted-1': !modelProxy }"
+        :class="{ 'muted-2': !modelProxy }"
       >
         {{ caption }}
       </div>
