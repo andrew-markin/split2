@@ -17,8 +17,8 @@
       </q-btn>
     </block-container>
   </div>
-  <scroll-area class="content bg-base">
-    <block-container class="q-pa-sm">
+  <scroll-area class="content bg-base" :vertical-offset="[60, 0]">
+    <block-container class="q-pa-sm" style="margin-top: 60px">
       <div class="column q-gutter-sm q-mb-lg">
         <category-section />
         <participant-section />
@@ -70,13 +70,26 @@ async function edit() {
 </script>
 
 <style scoped lang="scss">
+@mixin transparent-overlay($result-color, $bg-color, $alpha: 0.75) {
+  $source-color: rgb(
+    calc((red($result-color) - red($bg-color) * (1 - $alpha)) / $alpha),
+    calc((green($result-color) - green($bg-color) * (1 - $alpha)) / $alpha),
+    calc((blue($result-color) - blue($bg-color) * (1 - $alpha)) / $alpha)
+  );
+  background-color: rgba($source-color, $alpha);
+}
 .header {
   position: absolute;
   left: 0px;
   top: 0px;
   right: 0px;
   height: 60px;
-  background-color: $primary;
+  backdrop-filter: blur(8px);
+  z-index: $z-side;
+  @include transparent-overlay($primary, $base-color);
+  .body--dark & {
+    @include transparent-overlay($primary, $base-dark-color);
+  }
 }
 .btn-menu {
   background-color: color-mix(in srgb, currentColor 10%, transparent);
@@ -84,7 +97,7 @@ async function edit() {
 .content {
   position: absolute;
   left: 0px;
-  top: 60px;
+  top: 0px;
   right: 0px;
   bottom: 0px;
   background-color: $base-color;
