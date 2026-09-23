@@ -11,7 +11,9 @@
 <script setup>
 import DialogFrame from './DialogFrame.vue'
 
-const { message } = defineProps({ message: { type: String, default: undefined } })
+const { message } = defineProps({
+  message: { type: String, default: undefined }
+})
 
 defineEmits(['close'])
 </script>

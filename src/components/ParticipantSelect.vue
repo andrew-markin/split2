@@ -20,7 +20,7 @@ import { computed } from 'vue'
 
 import { useSplit } from '@/composables/useSplit'
 
-const model = defineModel({ type: String })
+const model = defineModel({ type: String, default: undefined })
 
 const { exclude, placeholder } = defineProps({
   exclude: { type: String, default: undefined },

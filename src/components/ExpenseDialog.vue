@@ -60,7 +60,10 @@ import DateInput from './DateInput.vue'
 import DialogFrame from './DialogFrame.vue'
 import ParticipantSelect from './ParticipantSelect.vue'
 
-const { expense } = defineProps({ expense: { type: Object, default: () => {} } })
+const { expense } = defineProps({
+  expense: { type: Object, default: () => {} }
+})
+
 const emit = defineEmits(['close'])
 
 const { form, changes, changed } = useForm(

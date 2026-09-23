@@ -42,7 +42,10 @@ import { useValidator } from '@/composables/useValidator'
 import DialogFrame from './DialogFrame.vue'
 import ParticipationSelect from './ParticipationSelect.vue'
 
-const { category } = defineProps({ category: { type: Object, default: () => {} } })
+const { category } = defineProps({
+  category: { type: Object, default: () => {} }
+})
+
 const emit = defineEmits(['close'])
 
 const { form, changes, changed } = useForm({ ...category })

@@ -18,7 +18,7 @@
 import { date } from 'quasar'
 import { computed, useTemplateRef, watch } from 'vue'
 
-const model = defineModel({ type: String })
+const model = defineModel({ type: String, default: undefined })
 
 const modelProxy = computed({
   get() {

@@ -59,7 +59,10 @@ import DialogFrame from './DialogFrame.vue'
 import ParticipantSelect from './ParticipantSelect.vue'
 import ParticipationSelect from './ParticipationSelect.vue'
 
-const { participant } = defineProps({ participant: { type: Object, default: () => {} } })
+const { participant } = defineProps({
+  participant: { type: Object, default: () => {} }
+})
+
 const emit = defineEmits(['close'])
 
 const { form, changes, changed } = useForm({ ...participant })
