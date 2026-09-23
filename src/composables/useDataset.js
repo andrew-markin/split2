@@ -113,7 +113,7 @@ function useContext() {
     })
   }
 
-  async function duplicate(secret) {
+  async function clone(secret) {
     const anchor = await getStorageAnchor(secret)
     storage.set(`split:state:${anchor}`, {
       dataset: dataset.value,
@@ -328,9 +328,9 @@ function useContext() {
   const modified = computed(() => !!changed.value)
 
   return {
+    clone,
     connect,
     constrain,
-    duplicate,
     find,
     modified,
     select,

@@ -8,7 +8,7 @@ const NULL_ID = '0000000000000000000000'
 let context
 
 function useContext() {
-  const { constrain, connect, duplicate, find, modified, select, upsert } = useDataset()
+  const { constrain, connect, clone, find, modified, select, upsert } = useDataset()
 
   constrain({
     participations: {
@@ -235,8 +235,8 @@ function useContext() {
     activeParticipations,
     categories,
     categoryById,
+    clone,
     connect,
-    duplicate,
     expenses,
     modified,
     participantById,

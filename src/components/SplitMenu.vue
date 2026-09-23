@@ -13,11 +13,11 @@
         </q-item-section>
         <q-item-section no-wrap>New Split</q-item-section>
       </q-item>
-      <q-item v-close-popup clickable @click="duplicateSplit()">
+      <q-item v-close-popup clickable @click="cloneSplit()">
         <q-item-section side>
           <q-icon name="mdi-content-duplicate" />
         </q-item-section>
-        <q-item-section no-wrap>Duplicate Split</q-item-section>
+        <q-item-section no-wrap>Clone Split</q-item-section>
       </q-item>
       <q-item v-close-popup clickable @click="toggleTheme()">
         <q-item-section side>
@@ -54,7 +54,7 @@ import { getRandomSecret } from '@/utils'
 
 const route = useRoute()
 
-const { duplicate } = useSplit()
+const { clone } = useSplit()
 const themes = useThemes()
 
 function getSplitLink(secret) {
@@ -70,9 +70,9 @@ function newSplit() {
   window.open(getSplitLink(getRandomSecret()))
 }
 
-async function duplicateSplit() {
+async function cloneSplit() {
   const secret = getRandomSecret()
-  await duplicate(secret)
+  await clone(secret)
   window.open(getSplitLink(secret))
 }
 
