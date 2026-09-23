@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+import { useMeta } from 'quasar'
 import { watch } from 'vue'
 
 import BlockContainer from '@/components/BlockContainer.vue'
@@ -57,6 +58,11 @@ watch(
   (value) => connect(value),
   { immediate: true }
 )
+
+useMeta(() => ({
+  title: title.value,
+  titleTemplate: (title) => `Split: ${title}`
+}))
 
 async function edit() {
   await exec(SplitDialog)

@@ -8,7 +8,7 @@ import 'quasar/src/css/index.sass'
 import '@/styles/overrides.scss'
 import '@/styles/common.scss'
 
-import { Dark, Quasar } from 'quasar'
+import { Dark, Meta, Quasar } from 'quasar'
 import quasarMdiIconSet from 'quasar/icon-set/mdi-v7'
 import { createApp } from 'vue'
 
@@ -20,7 +20,7 @@ const app = createApp(App)
 app.use(router)
 
 app.use(Quasar, {
-  plugins: { Dark },
+  plugins: { Dark, Meta },
   iconSet: quasarMdiIconSet,
   config: {
     dark: 'auto'
