@@ -1,6 +1,6 @@
 <template>
   <dialog-frame title="Split">
-    <q-form id="form" greedy class="column no-wrap q-gutter-md" @submit="submit()">
+    <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <q-input
         v-model.trim="form.title"
         outlined

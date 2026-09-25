@@ -1,5 +1,5 @@
 <template>
-  <q-field v-model="modelProxy" tag="div">
+  <q-field v-model="modelProxy" tag="div" autofocus>
     <template #control>
       <div
         class="self-center full-width no-outline text-no-wrap"

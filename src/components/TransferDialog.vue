@@ -1,6 +1,6 @@
 <template>
   <dialog-frame :title="transfer?.id ? 'Transfer' : 'New Transfer'">
-    <q-form id="form" greedy class="column no-wrap q-gutter-md" @submit="submit()">
+    <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <date-input v-model="form.date" outlined clearable stack-label label="Date" />
       <participant-select
         v-model="form.sender"

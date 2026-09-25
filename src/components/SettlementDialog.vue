@@ -1,6 +1,6 @@
 <template>
   <dialog-frame title="Settlement">
-    <q-form id="form" greedy class="column no-wrap q-gutter-md" @submit="submit()">
+    <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <participant-select :model-value="form.sender" outlined stack-label label="Sender" readonly />
       <participant-select
         :model-value="form.receiver"
@@ -17,7 +17,7 @@
         readonly
       />
       <q-input :model-value="form.amount" outlined stack-label label="Amount" readonly />
-      <q-checkbox v-model="completed" label="Settlement completed (funds transferred)" />
+      <q-checkbox v-model="completed" label="Settlement completed (funds transferred)" autofocus />
       <date-input
         v-model="form.date"
         outlined
