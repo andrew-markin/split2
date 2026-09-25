@@ -36,8 +36,13 @@ const labels = computed(() => {
 })
 </script>
 
-<style scoped>
-.label:not(:last-child)::after {
-  content: ', ';
+<style scoped lang="scss">
+.label {
+  &:not(:last-child)::after {
+    content: ', ';
+  }
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>
