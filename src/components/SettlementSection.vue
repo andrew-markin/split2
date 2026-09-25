@@ -28,7 +28,7 @@
           <td class="text-left">
             <participant-label :id="settlement.receiver" />
           </td>
-          <td class="text-left">
+          <td class="text-left text-wrap">
             <participant-label :id="settlement.receiver">
               <template #default="{ participant }">
                 {{ participant.preferences }}

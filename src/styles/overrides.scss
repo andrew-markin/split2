@@ -1,9 +1,23 @@
 .q-markup-table {
   outline: none !important;
-}
-.q-markup-table thead th {
-  font-size: 13px;
-  font-weight: 700;
-  padding-top: 8px;
-  padding-bottom: 6px;
+
+  thead th {
+    font-size: 13px;
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 6px;
+  }
+
+  td {
+    padding: 16px;
+
+    &:has(.q-checkbox) {
+      padding: 0;
+      text-align: center;
+    }
+
+    &.text-wrap {
+      white-space: unset !important;
+    }
+  }
 }

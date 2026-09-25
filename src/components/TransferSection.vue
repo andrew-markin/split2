@@ -30,7 +30,9 @@
           class="non-selectable cursor-pointer"
           @click="edit(transfer)"
         >
-          <td><q-checkbox v-model="selection" size="xs" :val="transfer.id" /></td>
+          <td>
+            <q-checkbox v-model="selection" size="xs" :val="transfer.id" />
+          </td>
           <td class="text-left">
             <date-label :value="transfer.date" placeholder="Undefined" />
           </td>
@@ -40,7 +42,7 @@
           <td class="text-left">
             <participant-label :id="transfer.receiver" />
           </td>
-          <td class="text-left">{{ transfer.comment }}</td>
+          <td class="text-left text-wrap">{{ transfer.comment }}</td>
           <td class="text-right">{{ transfer.amount }}</td>
         </tr>
         <tr v-if="transfers.length === 0">

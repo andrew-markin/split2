@@ -33,7 +33,7 @@
           <td class="text-left">
             <participant-label :id="participant.patron" placeholder="Themselves" />
           </td>
-          <td class="text-left">
+          <td class="text-left text-wrap">
             <participation-list :participant="participant.id" />
           </td>
         </tr>

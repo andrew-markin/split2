@@ -1,5 +1,9 @@
 <template>
-  <span v-if="labels.length > 0">{{ labels.join(', ') }}</span>
+  <template v-if="labels.length > 0">
+    <span v-for="(label, index) in labels" :key="index" class="label inline-block q-mr-xs">
+      {{ label }}
+    </span>
+  </template>
   <span v-else class="muted-3">None</span>
 </template>
 
@@ -31,3 +35,9 @@ const labels = computed(() => {
   return result.map(({ name, rate }) => (rate === 100 ? name : `${name} (${rate}%)`)).sort()
 })
 </script>
+
+<style scoped>
+.label:not(:last-child)::after {
+  content: ', ';
+}
+</style>

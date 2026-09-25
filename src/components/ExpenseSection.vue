@@ -34,7 +34,7 @@
           <td class="text-left">
             <date-label :value="expense.date" placeholder="Undefined" />
           </td>
-          <td class="text-left">{{ expense.description }}</td>
+          <td class="text-left text-wrap">{{ expense.description }}</td>
           <td class="text-left">
             <category-label :id="expense.category" placeholder="Common" />
           </td>

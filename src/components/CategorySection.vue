@@ -29,7 +29,7 @@
         >
           <td><q-checkbox v-model="selection" size="xs" :val="category.id" /></td>
           <td class="text-left">{{ category.name }}</td>
-          <td class="text-left"><participation-list :category="category.id" /></td>
+          <td class="text-left text-wrap"><participation-list :category="category.id" /></td>
         </tr>
         <tr v-if="categories.length === 0">
           <td colspan="3" class="muted-2 text-center q-td--no-hover">No categories</td>
