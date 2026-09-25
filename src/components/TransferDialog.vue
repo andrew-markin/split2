@@ -27,6 +27,7 @@
         stack-label
         label="Comment"
         :maxlength="128"
+        autogrow
         no-error-icon
       />
       <q-input

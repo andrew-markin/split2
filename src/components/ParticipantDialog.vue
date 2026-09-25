@@ -27,6 +27,7 @@
         stack-label
         label="Transfer Preferences"
         :maxlength="64"
+        autogrow
       />
     </q-form>
     <participation-select

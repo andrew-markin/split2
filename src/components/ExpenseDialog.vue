@@ -9,6 +9,7 @@
         stack-label
         label="Description"
         :maxlength="128"
+        autogrow
         lazy-rules="ondemand"
         :rules="descriptionRules"
         no-error-icon
