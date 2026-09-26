@@ -26,7 +26,7 @@
         label="Date"
         :disable="!completed"
       />
-      <q-input
+      <long-text-input
         v-model.trim="form.comment"
         outlined
         counter
@@ -61,6 +61,7 @@ import { getNonce } from '@/utils.js'
 
 import DateInput from './DateInput.vue'
 import DialogFrame from './DialogFrame.vue'
+import LongTextInput from './LongTextInput.vue'
 import ParticipantSelect from './ParticipantSelect.vue'
 
 const { settlement } = defineProps({

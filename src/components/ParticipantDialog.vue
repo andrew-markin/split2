@@ -20,7 +20,7 @@
         :exclude="form.id"
         placeholder="Themselves"
       />
-      <q-input
+      <long-text-input
         v-model.trim="form.preferences"
         outlined
         counter
@@ -57,6 +57,7 @@ import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
 
 import DialogFrame from './DialogFrame.vue'
+import LongTextInput from './LongTextInput.vue'
 import ParticipantSelect from './ParticipantSelect.vue'
 import ParticipationSelect from './ParticipationSelect.vue'
 

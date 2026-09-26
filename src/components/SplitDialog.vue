@@ -1,7 +1,7 @@
 <template>
   <dialog-frame title="Split">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
-      <q-input
+      <long-text-input
         v-model.trim="form.title"
         outlined
         counter
@@ -9,6 +9,7 @@
         label="Title"
         placeholder="Untitled"
         :maxlength="164"
+        autogrow
         lazy-rules="ondemand"
         :rules="titleRules"
         no-error-icon
@@ -36,6 +37,7 @@ import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
 
 import DialogFrame from './DialogFrame.vue'
+import LongTextInput from './LongTextInput.vue'
 
 const emit = defineEmits(['close'])
 

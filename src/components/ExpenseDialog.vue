@@ -2,7 +2,7 @@
   <dialog-frame :title="expense?.id ? 'Expense' : 'New Expense'">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <date-input v-model="form.date" outlined clearable stack-label label="Date" />
-      <q-input
+      <long-text-input
         v-model.trim="form.description"
         outlined
         counter
@@ -59,6 +59,7 @@ import { amountSchema } from '@/schemas.js'
 import CategorySelect from './CategorySelect.vue'
 import DateInput from './DateInput.vue'
 import DialogFrame from './DialogFrame.vue'
+import LongTextInput from './LongTextInput.vue'
 import ParticipantSelect from './ParticipantSelect.vue'
 
 const { expense } = defineProps({
