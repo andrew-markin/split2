@@ -70,13 +70,20 @@ async function edit() {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @mixin transparent-overlay($result-color, $bg-color, $alpha: 0.75) {
+  $r-res: color.channel($result-color, 'red', $space: rgb);
+  $r-bg: color.channel($bg-color, 'red', $space: rgb);
+  $g-res: color.channel($result-color, 'green', $space: rgb);
+  $g-bg: color.channel($bg-color, 'green', $space: rgb);
+  $b-res: color.channel($result-color, 'blue', $space: rgb);
+  $b-bg: color.channel($bg-color, 'blue', $space: rgb);
   $source-color: rgb(
-    calc((red($result-color) - red($bg-color) * (1 - $alpha)) / $alpha),
-    calc((green($result-color) - green($bg-color) * (1 - $alpha)) / $alpha),
-    calc((blue($result-color) - blue($bg-color) * (1 - $alpha)) / $alpha)
+    calc(($r-res - $r-bg * (1 - $alpha)) / $alpha),
+    calc(($g-res - $g-bg * (1 - $alpha)) / $alpha),
+    calc(($b-res - $b-bg * (1 - $alpha)) / $alpha)
   );
-  background-color: rgba($source-color, $alpha);
+  background-color: color.change($source-color, $alpha: $alpha);
 }
 .header {
   position: absolute;
