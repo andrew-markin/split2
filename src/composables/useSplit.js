@@ -30,8 +30,8 @@ function useContext() {
     set: (value) => upsert({ config: [{ id: NULL_ID, title: value }] })
   })
 
-  const categories = select('categories', ['name', 'id'])
   const participants = select('participants', ['name', 'id'])
+  const categories = select('categories', ['name', 'id'])
   const participations = select('participations')
   const expenses = select('expenses', ['date', 'id'])
   const transfers = select('transfers', ['date', 'sender', 'receiver', 'nonce', 'id'])
@@ -40,32 +40,25 @@ function useContext() {
     return participations.value.filter(({ active, rate }) => active && rate > 0)
   })
 
-  const categoriesMap = computed(() => {
-    return new Map(categories.value.map((item) => [item.id, item]))
-  })
-
   const participantsMap = computed(() => {
     return new Map(participants.value.map((item) => [item.id, item]))
   })
 
-  function categoryById(id) {
-    return computed(() => categoriesMap.value.get(id))
-  }
+  const categoriesMap = computed(() => {
+    return new Map(categories.value.map((item) => [item.id, item]))
+  })
 
   function participantById(id) {
     return computed(() => participantsMap.value.get(id))
   }
 
+  function categoryById(id) {
+    return computed(() => categoriesMap.value.get(id))
+  }
+
   const settlements = shallowRef([])
 
   watchEffect(() => {
-    // Map categories to their temporary calculation objects
-    const categoriesCalcMap = new Map(
-      // Undefined represents the common expenses category
-      [undefined, ...categories.value.map(({ id }) => id)].map((id) => {
-        return [id, { expenseCents: 0, scopeMap: new Map() }]
-      })
-    )
     // Map participants to their temporary calculation objects
     const participantsCalcMap = new Map(
       participants.value.map(({ id }) => [id, { id, balanceCents: 0 }])
@@ -80,6 +73,13 @@ function useContext() {
       ...participants.value.map(({ id }) => ({ participant: id, rate: 100 })),
       ...participations.value.filter(({ active, rate }) => active && rate > 0)
     ]
+    // Map categories to their temporary calculation objects
+    const categoriesCalcMap = new Map(
+      // Undefined represents the common expenses category
+      [undefined, ...categories.value.map(({ id }) => id)].map((id) => {
+        return [id, { expenseCents: 0, scopeMap: new Map() }]
+      })
+    )
     // Populate category scopes by aggregating rates per active payer
     for (const { participant, category, rate } of effectiveParticipations) {
       const categoryCalc = categoriesCalcMap.get(category)

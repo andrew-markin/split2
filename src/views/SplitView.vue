@@ -20,8 +20,8 @@
   <scroll-area class="content bg-base" :vertical-offset="[60, 0]">
     <block-container class="q-pa-sm" style="margin-top: 60px">
       <div class="column q-gutter-sm q-mb-lg">
-        <category-section />
         <participant-section />
+        <category-section />
         <expense-section />
         <transfer-section />
         <settlement-section />
