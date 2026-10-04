@@ -1,17 +1,17 @@
 <template>
   <section>
     <div class="row items-center muted-1">
-      <span class="text-h6 q-mr-xs q-my-sm">Settlements</span>
+      <span class="text-h6 q-mr-xs q-my-sm">{{ $t('settlement.plural') }}</span>
       <q-btn flat round icon="mdi-content-copy" @click="copy()" />
     </div>
     <q-markup-table separator="cell" flat bordered class="muted-1">
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="settlements.length === 0" /></th>
-          <th class="w-15ch text-left">Sender</th>
-          <th class="w-15ch text-left">Receiver</th>
-          <th class="w-full text-left">Transfer Preferences</th>
-          <th class="w-10ch text-right">Amount</th>
+          <th class="w-15ch text-left">{{ $t('sender') }}</th>
+          <th class="w-15ch text-left">{{ $t('receiver') }}</th>
+          <th class="w-full text-left">{{ $t('participant.preferences') }}</th>
+          <th class="w-10ch text-right">{{ $t('amount') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -40,7 +40,9 @@
           </td>
         </tr>
         <tr v-if="settlements.length === 0">
-          <td colspan="5" class="muted-2 text-center q-td--no-hover">No settlements</td>
+          <td colspan="5" class="muted-2 text-center q-td--no-hover">
+            {{ $t('settlement.none') }}
+          </td>
         </tr>
       </tbody>
     </q-markup-table>

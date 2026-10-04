@@ -2,10 +2,10 @@ import { Mutex } from 'async-mutex'
 import { computed, ref, shallowRef, toRaw, triggerRef, watch } from 'vue'
 import z from 'zod'
 
+import storage from '@/storage'
 import { getCipher, getNonce, getRandomId, sortByFields } from '@/utils'
 
 import { useBlob } from './useBlob'
-import { useStorage } from './useStorage'
 
 const CIPHER_SALT = import.meta.env.VITE_CIPHER_SALT
 
@@ -68,7 +68,6 @@ function useContext() {
   let flushTimeout = undefined
 
   const blob = useBlob()
-  const storage = useStorage()
 
   function constrain(value) {
     try {

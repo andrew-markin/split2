@@ -1,25 +1,25 @@
 <template>
-  <dialog-frame :title="expense?.id ? 'Expense' : 'New Expense'">
+  <dialog-frame :title="expense?.id ? $t('expense') : $t('expense.new')">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
-      <date-input v-model="form.date" outlined clearable stack-label label="Date" />
+      <date-input v-model="form.date" outlined clearable stack-label :label="$t('date')" />
       <long-text-input
         v-model.trim="form.description"
         outlined
         counter
         stack-label
-        label="Description"
+        :label="$t('expense.description')"
+        :hint="$t('expense.description.hint')"
         :maxlength="128"
-        autogrow
         lazy-rules="ondemand"
         :rules="descriptionRules"
         no-error-icon
       />
-      <category-select v-model="form.category" outlined stack-label label="Category" />
+      <category-select v-model="form.category" outlined stack-label :label="$t('category')" />
       <participant-select
         v-model="form.payer"
         outlined
         stack-label
-        label="Payer"
+        :label="$t('expense.payer')"
         lazy-rules="ondemand"
         :rules="payerRules"
         no-error-icon
@@ -28,20 +28,20 @@
         v-model.trim="form.amount"
         outlined
         stack-label
-        label="Amount"
+        :label="$t('amount')"
         lazy-rules="ondemand"
         :rules="amountRules"
         no-error-icon
       />
     </q-form>
     <template #buttons>
-      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
+      <q-btn outline color="primary" :label="$t('cancel')" @click="$emit('close')" />
       <q-btn
         unelevated
         type="submit"
         form="form"
         color="primary"
-        label="Save"
+        :label="$t('save')"
         :disable="!changed"
       />
     </template>
@@ -49,12 +49,12 @@
 </template>
 
 <script setup>
-import { z } from 'zod'
+import { useI18n } from 'vue-i18n'
 
 import { useForm } from '@/composables/useForm'
+import { useSchemas } from '@/composables/useSchemas.js'
 import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
-import { amountSchema } from '@/schemas.js'
 
 import CategorySelect from './CategorySelect.vue'
 import DateInput from './DateInput.vue'
@@ -68,24 +68,22 @@ const { expense } = defineProps({
 
 const emit = defineEmits(['close'])
 
+const { t } = useI18n()
+const { amountSchema, stringSchema } = useSchemas()
+
 const { form, changes, changed } = useForm(
-  { ...expense },
+  { description: '', amount: '', ...expense },
   {
     transform(form) {
-      if (form.amount !== undefined) form.amount = Number(form.amount).toFixed(2)
+      if (form.amount) form.amount = Number(form.amount).toFixed(2)
     }
   }
 )
 
-const descriptionSchema = z
-  .string('Description is required')
-  .min(1, 'Description is required')
-  .regex(/^[\p{L}\p{P}\d\s]+$/u, 'Only letters, punctuation, hyphens, brackets and spaces allowed')
-
+const descriptionSchema = stringSchema(t('expense.description.required.error'))
 const descriptionRules = [useValidator(descriptionSchema)]
 
-const payerRules = [(value) => !!value || 'Payer is required']
-
+const payerRules = [(value) => !!value || t('expense.payer.required.error')]
 const amountRules = [useValidator(amountSchema)]
 
 const { upsert } = useSplit()

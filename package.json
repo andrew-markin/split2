@@ -22,11 +22,13 @@
     "quasar": "^2.32.3",
     "socket.io-client": "^4.8.3",
     "vue": "^3.5.42",
+    "vue-i18n": "^11.4.12",
     "vue-router": "^5.3.1",
     "zod": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@intlify/unplugin-vue-i18n": "^11.2.5",
     "@quasar/vite-plugin": "^2.0.2",
     "@vitejs/plugin-vue": "^6.0.9",
     "eslint": "^10.10.0",
@@ -45,6 +47,7 @@
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true,
-    "@parcel/watcher@2.6.0": true
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.25.12": true
   }
 }

@@ -10,21 +10,84 @@ import '@/styles/common.scss'
 
 import { Dark, Meta, Quasar } from 'quasar'
 import quasarMdiIconSet from 'quasar/icon-set/mdi-v7'
-import { createApp } from 'vue'
+import { createApp, watch } from 'vue'
+import { createI18n } from 'vue-i18n'
 
 import App from '@/App.vue'
 import router from '@/router'
+import storage from '@/storage'
 
 const app = createApp(App)
 
 app.use(router)
 
+// I18n
+
+const localesAvailable = import.meta.glob('./locales/*.json', { eager: true })
+const messages = {}
+const quasarLangNamesRequired = new Set()
+
+Object.keys(localesAvailable).forEach((path) => {
+  const matched = path.match(/\/([^/]+)\.json$/)
+  if (matched && matched.length > 1) {
+    const localeName = matched[1]
+    const localeContent = localesAvailable[path].default
+    messages[localeName] = localeContent
+    const quasarLangName = localeContent['#quasar.lang'].body?.static
+    if (quasarLangName) quasarLangNamesRequired.add(quasarLangName)
+  }
+})
+
+const quasarLangsAvailable = import.meta.glob('../node_modules/quasar/lang/*.js', { eager: true })
+const quasarLangsMap = {}
+
+Object.keys(quasarLangsAvailable).forEach((path) => {
+  const matched = path.match(/\/([^/]+)\.js$/)
+  if (matched && matched.length > 1) {
+    const quasarLangName = matched[1]
+    if (quasarLangNamesRequired.has(quasarLangName)) {
+      quasarLangsMap[quasarLangName] = quasarLangsAvailable[path].default
+    }
+  }
+})
+
+function quasarLangForLocale(locale) {
+  return quasarLangsMap[i18n.global.t('#quasar.lang', {}, { locale })]
+}
+
+const trimLocale = (value) => value && value.trim().split(/-|_/)[0]
+const navigatorLocale = trimLocale(
+  navigator.languages !== undefined ? navigator.languages[0] : navigator.language
+)
+
+const LOCALE_STORAGE_KEY = 'locale'
+const defaultLocale = storage.get(LOCALE_STORAGE_KEY) || navigatorLocale || 'en'
+
+const i18n = createI18n({
+  locale: defaultLocale,
+  fallbackLocale: 'en',
+  messages,
+  legacy: false
+})
+
+app.use(i18n)
+
+// Quasar
+
 app.use(Quasar, {
   plugins: { Dark, Meta },
   iconSet: quasarMdiIconSet,
-  config: {
-    dark: 'auto'
-  }
+  config: { dark: 'auto' },
+  lang: quasarLangForLocale(defaultLocale)
 })
+
+watch(
+  () => i18n.global.locale.value,
+  (locale) => {
+    if (locale !== navigatorLocale) storage.set(LOCALE_STORAGE_KEY, locale)
+    else storage.remove(LOCALE_STORAGE_KEY)
+    Quasar.lang.set(quasarLangForLocale(locale))
+  }
+)
 
 app.mount('#app')

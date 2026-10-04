@@ -1,12 +1,13 @@
 <template>
-  <dialog-frame :title="participant?.id ? 'Participant' : 'New Participant'">
+  <dialog-frame :title="participant?.id ? $t('participant') : $t('participant.new')">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <q-input
         v-model.trim="form.name"
         outlined
         counter
         stack-label
-        label="Name"
+        :label="$t('participant.name')"
+        :hint="$t('participant.name.hint')"
         :maxlength="16"
         lazy-rules="ondemand"
         :rules="nameRules"
@@ -16,32 +17,36 @@
         v-model="form.patron"
         outlined
         stack-label
-        label="Who pays"
+        :label="$t('participant.patron')"
+        :placeholder="$t('participant.patron.none')"
         :exclude="form.id"
-        placeholder="Themselves"
       />
       <long-text-input
         v-model.trim="form.preferences"
         outlined
         counter
         stack-label
-        label="Transfer Preferences"
+        :label="$t('participant.preferences')"
+        :hint="$t('participant.preferences.hint')"
         :maxlength="64"
-        autogrow
+        lazy-rules="ondemand"
+        :rules="preferencesRules"
+        no-error-icon
       />
     </q-form>
     <participation-select
       :participant="form.id"
+      class="q-mt-sm"
       @changes="(value) => (participationChanges = value)"
     />
     <template #buttons>
-      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
+      <q-btn outline color="primary" :label="$t('cancel')" @click="$emit('close')" />
       <q-btn
         unelevated
         type="submit"
         form="form"
         color="primary"
-        label="Save"
+        :label="$t('save')"
         :disable="!changesAvailable"
       />
     </template>
@@ -50,9 +55,10 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { z } from 'zod'
+import { useI18n } from 'vue-i18n'
 
 import { useForm } from '@/composables/useForm'
+import { useSchemas } from '@/composables/useSchemas.js'
 import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
 
@@ -67,7 +73,9 @@ const { participant } = defineProps({
 
 const emit = defineEmits(['close'])
 
-const { form, changes, changed } = useForm({ ...participant })
+const { t } = useI18n()
+
+const { form, changes, changed } = useForm({ name: '', preferences: '', ...participant })
 
 const participationChanges = ref([])
 
@@ -79,12 +87,13 @@ const combinedChanges = computed(() => {
   return result
 })
 
-const nameSchema = z
-  .string('Name is required')
-  .min(1, 'Name is required')
-  .regex(/^[\p{L}\p{P}\d\s]+$/u, 'Only letters, punctuation, hyphens, brackets and spaces allowed')
+const { stringSchema } = useSchemas()
 
+const nameSchema = stringSchema(t('participant.name.required.error'))
 const nameRules = [useValidator(nameSchema)]
+
+const preferencesSchema = stringSchema()
+const preferencesRules = [useValidator(preferencesSchema)]
 
 const { upsert } = useSplit()
 

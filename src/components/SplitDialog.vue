@@ -1,15 +1,15 @@
 <template>
-  <dialog-frame title="Split">
+  <dialog-frame :title="$t('split')">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <long-text-input
         v-model.trim="form.title"
         outlined
         counter
         stack-label
-        label="Title"
-        placeholder="Untitled"
+        :label="$t('split.title')"
+        :hint="$t('split.title.hint')"
+        :placeholder="$t('split.untitled')"
         :maxlength="164"
-        autogrow
         lazy-rules="ondemand"
         :rules="titleRules"
         no-error-icon
@@ -31,8 +31,8 @@
 
 <script setup>
 import { computed, reactive } from 'vue'
-import { z } from 'zod'
 
+import { useSchemas } from '@/composables/useSchemas.js'
 import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
 
@@ -43,16 +43,12 @@ const emit = defineEmits(['close'])
 
 const { title } = useSplit()
 
-const form = reactive({
-  title: title.value
-})
+const form = reactive({ title: title.value || '' })
+const changed = computed(() => form.title !== (title.value || ''))
 
-const changed = computed(() => form.title !== title.value)
+const { stringSchema } = useSchemas()
 
-const titleSchema = z
-  .string()
-  .regex(/^[\p{L}\p{P}\d\s]*$/u, 'Only letters, punctuation, hyphens, brackets and spaces allowed')
-
+const titleSchema = stringSchema()
 const titleRules = [useValidator(titleSchema)]
 
 async function submit() {

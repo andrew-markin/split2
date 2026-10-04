@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="row items-center muted-1">
-      <span class="text-h6 q-mr-xs q-my-sm">Participants</span>
+      <span class="text-h6 q-mr-xs q-my-sm">{{ $t('participant.plural') }}</span>
       <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
@@ -16,9 +16,9 @@
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="participants.length === 0" /></th>
-          <th class="w-15ch text-left">Name</th>
-          <th class="w-15ch text-left">Who pays</th>
-          <th class="w-full text-left">Categories</th>
+          <th class="w-15ch text-left">{{ $t('participant.name') }}</th>
+          <th class="w-15ch text-left">{{ $t('participant.patron') }}</th>
+          <th class="w-full text-left">{{ $t('category.plural') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -31,14 +31,19 @@
           <td><q-checkbox v-model="selection" size="xs" :val="participant.id" /></td>
           <td class="text-left">{{ participant.name }}</td>
           <td class="text-left">
-            <participant-label :id="participant.patron" placeholder="Themselves" />
+            <participant-label
+              :id="participant.patron"
+              :placeholder="$t('participant.patron.none')"
+            />
           </td>
           <td class="text-left text-wrap">
             <participation-list :participant="participant.id" />
           </td>
         </tr>
         <tr v-if="participants.length === 0">
-          <td colspan="4" class="muted-2 text-center q-td--no-hover">No participants</td>
+          <td colspan="4" class="muted-2 text-center q-td--no-hover">
+            {{ $t('participant.none') }}
+          </td>
         </tr>
       </tbody>
     </q-markup-table>
@@ -47,6 +52,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
@@ -55,6 +61,8 @@ import ConfirmationDialog from './ConfirmationDialog.vue'
 import ParticipantDialog from './ParticipantDialog.vue'
 import ParticipantLabel from './ParticipantLabel.vue'
 import ParticipationList from './ParticipationList.vue'
+
+const { t } = useI18n()
 
 const { participants, upsert } = useSplit()
 
@@ -80,7 +88,7 @@ async function edit(participant = {}) {
 async function remove() {
   if (selection.value.length === 0) return
   const confirmed = await exec(ConfirmationDialog, {
-    message: 'Are you sure you want to remove selected participants?'
+    message: t('participant.removal.confirmation', selection.value.length)
   })
   if (!confirmed) return
   await upsert({ participants: selection.value.map((id) => ({ id, removed: true })) })

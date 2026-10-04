@@ -1,12 +1,12 @@
 <template>
-  <dialog-frame :title="transfer?.id ? 'Transfer' : 'New Transfer'">
+  <dialog-frame :title="transfer?.id ? $t('transfer') : $t('transfer.new')">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
-      <date-input v-model="form.date" outlined clearable stack-label label="Date" />
+      <date-input v-model="form.date" outlined clearable stack-label :label="$t('date')" />
       <participant-select
         v-model="form.sender"
         outlined
         stack-label
-        label="Sender"
+        :label="$t('sender')"
         :rules="senderRules"
         lazy-rules="ondemand"
         no-error-icon
@@ -15,7 +15,7 @@
         v-model="form.receiver"
         outlined
         stack-label
-        label="Receiver"
+        :label="$t('receiver')"
         :rules="receiverRules"
         lazy-rules="ondemand"
         no-error-icon
@@ -25,29 +25,31 @@
         outlined
         counter
         stack-label
-        label="Comment"
+        :label="$t('transfer.comment')"
+        :hint="$t('transfer.comment.hint')"
         :maxlength="128"
-        autogrow
+        lazy-rules="ondemand"
+        :rules="commentRules"
         no-error-icon
       />
       <q-input
         v-model.trim="form.amount"
         outlined
         stack-label
-        label="Amount"
+        :label="$t('amount')"
         :rules="amountRules"
         lazy-rules="ondemand"
         no-error-icon
       />
     </q-form>
     <template #buttons>
-      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
+      <q-btn outline color="primary" :label="$t('cancel')" @click="$emit('close')" />
       <q-btn
         unelevated
         type="submit"
         form="form"
         color="primary"
-        label="Save"
+        :label="$t('save')"
         :disable="!changed"
       />
     </template>
@@ -55,10 +57,12 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 import { useForm } from '@/composables/useForm'
+import { useSchemas } from '@/composables/useSchemas.js'
 import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
-import { amountSchema } from '@/schemas.js'
 import { getNonce } from '@/utils.js'
 
 import DateInput from './DateInput.vue'
@@ -72,24 +76,31 @@ const { transfer } = defineProps({
 
 const emit = defineEmits(['close'])
 
+const { t } = useI18n()
+
 const { form, changes, changed } = useForm(
-  { ...transfer },
+  { comment: '', amount: '', ...transfer },
   {
     transform(form) {
-      if (form.amount !== undefined) form.amount = Number(form.amount).toFixed(2)
+      if (form.amount) form.amount = Number(form.amount).toFixed(2)
     }
   }
 )
 
+const { amountSchema, stringSchema } = useSchemas()
+
 const senderRules = [
-  (value) => !!value || 'Sender is required',
-  (value) => value !== form.receiver || 'Sender and Receiver cannot be the same'
+  (value) => !!value || t('transfer.sender.required.error'),
+  (value) => value !== form.receiver || t('transfer.loop.error')
 ]
 
 const receiverRules = [
-  (value) => !!value || 'Receiver is required',
-  (value) => value !== form.sender || 'Receiver and Sender cannot be the same'
+  (value) => !!value || t('transfer.receiver.required.error'),
+  (value) => value !== form.sender || t('transfer.loop.error')
 ]
+
+const commentSchema = stringSchema()
+const commentRules = [useValidator(commentSchema)]
 
 const amountRules = [useValidator(amountSchema)]
 

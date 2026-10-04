@@ -1,0 +1,17 @@
+function get(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key))
+  } catch (err) {
+    console.log('Unable to get storage value:', err.message)
+  }
+}
+
+function set(key, value) {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
+function remove(key) {
+  localStorage.removeItem(key)
+}
+
+export default { get, set, remove }

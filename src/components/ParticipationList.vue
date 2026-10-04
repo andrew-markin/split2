@@ -4,7 +4,7 @@
       {{ label }}
     </span>
   </template>
-  <span v-else class="muted-3">None</span>
+  <span v-else class="muted-3">{{ $t('participation.none') }}</span>
 </template>
 
 <script setup>

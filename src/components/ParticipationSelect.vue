@@ -2,7 +2,7 @@
   <div v-if="options.length > 0" class="column q-gutter-y-sm">
     <div class="text-h6 muted-1">{{ title }}</div>
     <div v-for="option in options" :key="option.id" class="row q-col-gutter-x-sm items-center">
-      <q-checkbox v-model="option.active" :label="option.label" class="col-5" />
+      <q-checkbox v-model="option.active" :label="option.label" class="col-5 text-no-wrap" />
       <q-slider
         v-model="option.rate"
         :min="0"
@@ -20,6 +20,7 @@
 
 <script setup>
 import { computed, ref, toRaw, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useSplit } from '@/composables/useSplit'
 import { getComposedId } from '@/utils'
@@ -33,6 +34,8 @@ const { participant, category } = defineProps({
 
 const emit = defineEmits(['changes'])
 
+const { t } = useI18n()
+
 const options = ref([])
 
 const participantsSnapshot = toRaw(participants.value)
@@ -41,8 +44,8 @@ const participationsSnapshot = toRaw(participations.value)
 const participationsMap = new Map(participationsSnapshot.map((item) => [item.id, item]))
 
 const title = computed(() => {
-  if (participant) return 'Categories'
-  if (category) return 'Participants'
+  if (participant) return t('category.plural')
+  if (category) return t('participant.plural')
   return undefined
 })
 

@@ -17,6 +17,7 @@
 <script setup>
 import { date } from 'quasar'
 import { computed, useTemplateRef, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const model = defineModel({ type: String, default: undefined })
 
@@ -29,8 +30,10 @@ const modelProxy = computed({
   }
 })
 
+const { t } = useI18n()
+
 const caption = computed(() =>
-  model.value ? date.formatDate(model.value, 'MMM D, YYYY') : 'Undefined'
+  model.value ? date.formatDate(model.value, t('date.format')) : t('date.undefined')
 )
 
 const datePopup = useTemplateRef('date-popup')

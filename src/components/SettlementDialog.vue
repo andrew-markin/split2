@@ -1,29 +1,35 @@
 <template>
-  <dialog-frame title="Settlement">
+  <dialog-frame :title="$t('settlement')">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
-      <participant-select :model-value="form.sender" outlined stack-label label="Sender" readonly />
+      <participant-select
+        :model-value="form.sender"
+        outlined
+        stack-label
+        :label="$t('sender')"
+        readonly
+      />
       <participant-select
         :model-value="form.receiver"
         outlined
         stack-label
-        label="Receiver"
+        :label="$t('receiver')"
         readonly
       />
       <q-input
         :model-value="receiver.preferences"
         outlined
         stack-label
-        label="Transfer Preferences"
+        :label="$t('participant.preferences')"
         readonly
       />
-      <q-input :model-value="form.amount" outlined stack-label label="Amount" readonly />
-      <q-checkbox v-model="completed" label="Settlement completed (funds transferred)" autofocus />
+      <q-input :model-value="form.amount" outlined stack-label :label="$t('amount')" readonly />
+      <q-checkbox v-model="completed" :label="$t('settlement.completed.checkbox')" autofocus />
       <date-input
         v-model="form.date"
         outlined
         clearable
         stack-label
-        label="Date"
+        :label="$t('date')"
         :disable="!completed"
       />
       <long-text-input
@@ -31,21 +37,23 @@
         outlined
         counter
         stack-label
-        label="Comment"
+        :label="$t('transfer.comment')"
+        :hint="$t('settlement.transfer.comment.hint')"
         :maxlength="128"
-        autogrow
+        lazy-rules="ondemand"
+        :rules="commentRules"
         no-error-icon
         :disable="!completed"
       />
     </q-form>
     <template #buttons>
-      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
+      <q-btn outline color="primary" :label="$t('cancel')" @click="$emit('close')" />
       <q-btn
         unelevated
         type="submit"
         form="form"
         color="primary"
-        label="Confirm"
+        :label="$t('confirm')"
         :disable="!completed"
       />
     </template>
@@ -56,7 +64,9 @@
 import { computed, ref } from 'vue'
 
 import { useForm } from '@/composables/useForm'
+import { useSchemas } from '@/composables/useSchemas.js'
 import { useSplit } from '@/composables/useSplit'
+import { useValidator } from '@/composables/useValidator'
 import { getNonce } from '@/utils.js'
 
 import DateInput from './DateInput.vue'
@@ -82,6 +92,10 @@ const { form, changes, changed } = useForm(
     }
   }
 )
+
+const { stringSchema } = useSchemas()
+const commentSchema = stringSchema()
+const commentRules = [useValidator(commentSchema)]
 
 const { upsert, participantById } = useSplit()
 

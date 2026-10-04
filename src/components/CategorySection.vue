@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="row items-center muted-1">
-      <span class="text-h6 q-mr-xs q-my-sm">Categories</span>
+      <span class="text-h6 q-mr-xs q-my-sm">{{ $t('category.plural') }}</span>
       <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
@@ -16,8 +16,8 @@
       <thead>
         <tr>
           <th><q-checkbox v-model="selectAll" size="xs" :disable="categories.length === 0" /></th>
-          <th class="w-15ch text-left">Name</th>
-          <th class="w-full text-left">Participants</th>
+          <th class="w-15ch text-left">{{ $t('category.name') }}</th>
+          <th class="w-full text-left">{{ $t('participant.plural') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +32,7 @@
           <td class="text-left text-wrap"><participation-list :category="category.id" /></td>
         </tr>
         <tr v-if="categories.length === 0">
-          <td colspan="3" class="muted-2 text-center q-td--no-hover">No categories</td>
+          <td colspan="3" class="muted-2 text-center q-td--no-hover">{{ $t('category.none') }}</td>
         </tr>
       </tbody>
     </q-markup-table>
@@ -41,6 +41,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
@@ -48,6 +49,8 @@ import { useSplit } from '@/composables/useSplit'
 import CategoryDialog from './CategoryDialog.vue'
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import ParticipationList from './ParticipationList.vue'
+
+const { t } = useI18n()
 
 const { categories, upsert } = useSplit()
 
@@ -73,7 +76,7 @@ async function edit(category = {}) {
 async function remove() {
   if (selection.value.length === 0) return
   const confirmed = await exec(ConfirmationDialog, {
-    message: 'Are you sure you want to remove selected categories?'
+    message: t('category.removal.confirmation', selection.value.length)
   })
   if (!confirmed) return
   await upsert({ categories: selection.value.map((id) => ({ id, removed: true })) })

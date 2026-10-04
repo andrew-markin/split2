@@ -2,9 +2,9 @@
   <div class="header column justify-center text-white">
     <block-container class="text-h5 q-px-sm row no-wrap items-center">
       <div class="non-selectable cursor-pointer ellipsis" @click="edit()">
-        <span class="text-weight-bold q-mr-sm">Split:</span>
+        <span class="text-weight-bold q-mr-sm">{{ $t('split') }}:</span>
         <span v-if="title">{{ title }}</span>
-        <span v-else class="muted-2">Untitled</span>
+        <span v-else class="muted-2">{{ $t('split.untitled') }}</span>
       </div>
       <div class="relative-position full-height q-mx-md">
         <transition leave-active-class="animated zoomOut">
@@ -33,6 +33,7 @@
 <script setup>
 import { useMeta } from 'quasar'
 import { watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import BlockContainer from '@/components/BlockContainer.vue'
 import CategorySection from '@/components/CategorySection.vue'
@@ -50,19 +51,18 @@ const { secret } = defineProps({
   secret: { type: String, required: true }
 })
 
+const { t } = useI18n()
+
 const { connect, title, modified } = useSplit()
 const { exec } = useDialogs()
+
+useMeta(() => ({ title: `${t('split')}: ${title.value || t('split.untitled')}` }))
 
 watch(
   () => secret,
   (value) => connect(value),
   { immediate: true }
 )
-
-useMeta(() => ({
-  title: title.value,
-  titleTemplate: (title) => `Split: ${title}`
-}))
 
 async function edit() {
   await exec(SplitDialog)

@@ -1,9 +1,9 @@
 <template>
-  <dialog-frame title="Confirmation required">
+  <dialog-frame :title="$t('confirmation.title')">
     <div>{{ message }}</div>
     <template #buttons>
-      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
-      <q-btn unelevated color="primary" label="Confirm" @click="$emit('close', true)" />
+      <q-btn outline color="primary" :label="$t('cancel')" @click="$emit('close')" />
+      <q-btn unelevated color="primary" :label="$t('confirm')" @click="$emit('close', true)" />
     </template>
   </dialog-frame>
 </template>

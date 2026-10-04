@@ -1,12 +1,11 @@
 import { useQuasar } from 'quasar'
 
-import { useStorage } from '@/composables/useStorage'
+import storage from '@/storage'
 
 const SPLIT_IS_DARK_STORAGE_KEY = 'split:dark'
 
 export function useThemes() {
   const $q = useQuasar()
-  const storage = useStorage()
 
   function systemIsDark() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches

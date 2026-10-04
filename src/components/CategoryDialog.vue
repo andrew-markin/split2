@@ -1,12 +1,13 @@
 <template>
-  <dialog-frame :title="category?.id ? 'Category' : 'New Category'">
+  <dialog-frame :title="category?.id ? $t('category') : $t('category.new')">
     <q-form id="form" autofocus greedy class="column no-wrap q-gutter-md" @submit="submit()">
       <q-input
         v-model.trim="form.name"
         outlined
         counter
         stack-label
-        label="Name"
+        :label="$t('category.name')"
+        :hint="$t('category.name.hint')"
         :maxlength="16"
         lazy-rules="ondemand"
         :rules="nameRules"
@@ -15,16 +16,17 @@
     </q-form>
     <participation-select
       :category="form.id"
+      class="q-mt-sm"
       @changes="(value) => (participationChanges = value)"
     />
     <template #buttons>
-      <q-btn outline color="primary" label="Cancel" @click="$emit('close')" />
+      <q-btn outline color="primary" :label="$t('cancel')" @click="$emit('close')" />
       <q-btn
         unelevated
         type="submit"
         form="form"
         color="primary"
-        label="Save"
+        :label="$t('save')"
         :disable="!changesAvailable"
       />
     </template>
@@ -33,9 +35,10 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { z } from 'zod'
+import { useI18n } from 'vue-i18n'
 
 import { useForm } from '@/composables/useForm'
+import { useSchemas } from '@/composables/useSchemas.js'
 import { useSplit } from '@/composables/useSplit'
 import { useValidator } from '@/composables/useValidator'
 
@@ -48,7 +51,9 @@ const { category } = defineProps({
 
 const emit = defineEmits(['close'])
 
-const { form, changes, changed } = useForm({ ...category })
+const { t } = useI18n()
+
+const { form, changes, changed } = useForm({ name: '', ...category })
 
 const participationChanges = ref([])
 
@@ -60,11 +65,9 @@ const combinedChanges = computed(() => {
   return result
 })
 
-const nameSchema = z
-  .string('Name is required')
-  .min(1, 'Name is required')
-  .regex(/^[\p{L}\p{P}\d\s]+$/u, 'Only letters, punctuation, hyphens, brackets and spaces allowed')
+const { stringSchema } = useSchemas()
 
+const nameSchema = stringSchema(t('category.name.required.error'))
 const nameRules = [useValidator(nameSchema)]
 
 const { upsert } = useSplit()
