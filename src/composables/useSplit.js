@@ -149,11 +149,16 @@ function useContext() {
     while (true) {
       // Make a copy of the participants calc map for a calculation attempt
       const participantsCalcMapCopy = structuredClone(participantsCalcMap)
+      // (Re-)Link participants to the actual payer (e.g., redirecting
+      // children/dependents to a patron/parent)
+      const payersCalcMapCopy = new Map(
+        participants.value.map(({ id, patron }) => [id, participantsCalcMapCopy.get(patron ?? id)])
+      )
       // Apply arbitrary transfers to sender and receiver participant calcs
       for (let i = 0; i < arbitraryTransfersCount; i++) {
         const { sender, receiver, amountCents } = transferSequence[i]
-        const senderCalc = participantsCalcMapCopy.get(sender)
-        const receiverCalc = participantsCalcMapCopy.get(receiver)
+        const senderCalc = payersCalcMapCopy.get(sender)
+        const receiverCalc = payersCalcMapCopy.get(receiver)
         senderCalc.balanceCents -= amountCents
         receiverCalc.balanceCents += amountCents
       }
