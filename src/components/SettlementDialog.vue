@@ -85,7 +85,7 @@ const { form, changes, changed } = useForm(
   {
     init(form) {
       const { sender, receiver, amount } = settlement || {}
-      Object.assign(form, { sender, receiver, amount, nonce: getNonce() })
+      Object.assign(form, { sender, receiver, comment: '', amount, nonce: getNonce() })
     },
     transform(form) {
       if (form.amount !== undefined) form.amount = Number(form.amount).toFixed(2)
