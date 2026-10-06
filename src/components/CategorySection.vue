@@ -1,7 +1,12 @@
 <template>
-  <section>
-    <div class="row items-center muted-1">
-      <span class="text-h6 q-mr-xs q-my-sm">{{ $t('category.plural') }}</span>
+  <split-section
+    :title="$t('category.plural')"
+    :fields="fields"
+    :items="categories"
+    :no-data-label="$t('category.none')"
+    @edit="edit"
+  >
+    <template #buttons="{ selection }">
       <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
@@ -9,38 +14,17 @@
         round
         color="negative"
         icon="mdi-trash-can-outline"
-        @click="remove()"
+        @click="remove(selection)"
       />
-    </div>
-    <q-markup-table separator="cell" flat bordered class="muted-1">
-      <thead>
-        <tr>
-          <th><q-checkbox v-model="selectAll" size="xs" :disable="categories.length === 0" /></th>
-          <th class="w-15ch text-left">{{ $t('category.name') }}</th>
-          <th class="w-full text-left">{{ $t('participant.plural') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="category in categories"
-          :key="category.id"
-          class="non-selectable cursor-pointer"
-          @click="edit(category)"
-        >
-          <td><q-checkbox v-model="selection" size="xs" :val="category.id" /></td>
-          <td class="text-left">{{ category.name }}</td>
-          <td class="text-left text-wrap"><participation-list :category="category.id" /></td>
-        </tr>
-        <tr v-if="categories.length === 0">
-          <td colspan="3" class="muted-2 text-center q-td--no-hover">{{ $t('category.none') }}</td>
-        </tr>
-      </tbody>
-    </q-markup-table>
-  </section>
+    </template>
+    <template #participants="{ item: category }">
+      <participation-list :category="category.id" />
+    </template>
+  </split-section>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useDialogs } from '@/composables/useDialogs'
@@ -49,37 +33,36 @@ import { useSplit } from '@/composables/useSplit'
 import CategoryDialog from './CategoryDialog.vue'
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import ParticipationList from './ParticipationList.vue'
+import SplitSection from './SplitSection.vue'
 
 const { t } = useI18n()
 
-const { categories, upsert } = useSplit()
-
-const { exec } = useDialogs()
-
-const selection = ref([])
-
-const selectAll = computed({
-  get() {
-    if (categories.value.length === 0 || selection.value.length === 0) return false
-    if (categories.value.length === selection.value.length) return true
-    return null
+const fields = computed(() => [
+  {
+    name: 'name',
+    title: t('category.name'),
+    cellClass: 'w-15ch text-left'
   },
-  set(value) {
-    selection.value = value ? categories.value.map(({ id }) => id) : []
+  {
+    name: 'participants',
+    title: t('participant.plural'),
+    cellClass: 'w-full text-left text-wrap'
   }
-})
+])
+
+const { categories, upsert } = useSplit()
+const { exec } = useDialogs()
 
 async function edit(category = {}) {
   await exec(CategoryDialog, { category })
 }
 
-async function remove() {
-  if (selection.value.length === 0) return
+async function remove(selection) {
+  if (selection.length === 0) return
   const confirmed = await exec(ConfirmationDialog, {
-    message: t('category.removal.confirmation', selection.value.length)
+    message: t('category.removal.confirmation', selection.length)
   })
   if (!confirmed) return
-  await upsert({ categories: selection.value.map((id) => ({ id, removed: true })) })
-  selection.value = []
+  await upsert({ categories: selection.map((id) => ({ id, removed: true })) })
 }
 </script>

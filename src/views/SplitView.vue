@@ -1,6 +1,6 @@
 <template>
-  <div class="header column justify-center text-white">
-    <block-container class="text-h5 q-px-sm row no-wrap items-center">
+  <div ref="headerRef" class="header column justify-center text-white">
+    <block-container class="text-h5 q-px-md row no-wrap items-center">
       <div class="non-selectable cursor-pointer ellipsis" @click="edit()">
         <span class="text-weight-bold q-mr-sm">{{ $t('split') }}:</span>
         <span v-if="title">{{ title }}</span>
@@ -17,22 +17,20 @@
       </q-btn>
     </block-container>
   </div>
-  <scroll-area class="content bg-base" :vertical-offset="[60, 0]">
-    <block-container class="q-pa-sm" style="margin-top: 60px">
-      <div class="column q-gutter-sm q-mb-lg">
-        <participant-section />
-        <category-section />
-        <expense-section />
-        <transfer-section />
-        <settlement-section />
-      </div>
-    </block-container>
+  <scroll-area class="content bg-base" :vertical-offset="[headerSize, 0]">
+    <div class="column q-mb-md" :style="{ marginTop: `${headerSize}px` }">
+      <participant-section />
+      <category-section />
+      <expense-section />
+      <transfer-section />
+      <settlement-section />
+    </div>
   </scroll-area>
 </template>
 
 <script setup>
 import { useMeta } from 'quasar'
-import { watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import BlockContainer from '@/components/BlockContainer.vue'
@@ -46,6 +44,13 @@ import SplitMenu from '@/components/SplitMenu.vue'
 import TransferSection from '@/components/TransferSection.vue'
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
+
+const headerRef = ref(null)
+const headerSize = ref(0)
+
+onMounted(() => {
+  headerSize.value = headerRef.value?.offsetHeight || 0
+})
 
 const { secret } = defineProps({
   secret: { type: String, required: true }
@@ -91,8 +96,8 @@ async function edit() {
   top: 0px;
   right: 0px;
   height: 60px;
-  backdrop-filter: blur(8px);
   z-index: $z-side;
+  backdrop-filter: blur(8px);
   @include transparent-overlay($primary, $base-color);
   .body--dark & {
     @include transparent-overlay($primary, $base-dark-color);

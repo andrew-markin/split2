@@ -1,7 +1,12 @@
 <template>
-  <section>
-    <div class="row items-center muted-1">
-      <span class="text-h6 q-mr-xs q-my-sm">{{ $t('participant.plural') }}</span>
+  <split-section
+    :title="$t('participant.plural')"
+    :fields="fields"
+    :items="participants"
+    :no-data-label="$t('participant.none')"
+    @edit="edit"
+  >
+    <template #buttons="{ selection }">
       <q-btn flat round icon="mdi-plus" @click="edit()" />
       <q-btn
         v-if="selection.length > 0"
@@ -9,49 +14,20 @@
         round
         color="negative"
         icon="mdi-trash-can-outline"
-        @click="remove()"
+        @click="remove(selection)"
       />
-    </div>
-    <q-markup-table separator="cell" flat bordered class="muted-1">
-      <thead>
-        <tr>
-          <th><q-checkbox v-model="selectAll" size="xs" :disable="participants.length === 0" /></th>
-          <th class="w-15ch text-left">{{ $t('participant.name') }}</th>
-          <th class="w-15ch text-left">{{ $t('participant.patron') }}</th>
-          <th class="w-full text-left">{{ $t('category.plural') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="participant in participants"
-          :key="participant.id"
-          class="non-selectable cursor-pointer"
-          @click="edit(participant)"
-        >
-          <td><q-checkbox v-model="selection" size="xs" :val="participant.id" /></td>
-          <td class="text-left">{{ participant.name }}</td>
-          <td class="text-left">
-            <participant-label
-              :id="participant.patron"
-              :placeholder="$t('participant.patron.none')"
-            />
-          </td>
-          <td class="text-left text-wrap">
-            <participation-list :participant="participant.id" />
-          </td>
-        </tr>
-        <tr v-if="participants.length === 0">
-          <td colspan="4" class="muted-2 text-center q-td--no-hover">
-            {{ $t('participant.none') }}
-          </td>
-        </tr>
-      </tbody>
-    </q-markup-table>
-  </section>
+    </template>
+    <template #patron="{ value }">
+      <participant-label :id="value" :placeholder="$t('participant.patron.none')" />
+    </template>
+    <template #categories="{ item: participant }">
+      <participation-list :participant="participant.id" />
+    </template>
+  </split-section>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { useDialogs } from '@/composables/useDialogs'
@@ -61,37 +37,41 @@ import ConfirmationDialog from './ConfirmationDialog.vue'
 import ParticipantDialog from './ParticipantDialog.vue'
 import ParticipantLabel from './ParticipantLabel.vue'
 import ParticipationList from './ParticipationList.vue'
+import SplitSection from './SplitSection.vue'
 
 const { t } = useI18n()
 
-const { participants, upsert } = useSplit()
-
-const { exec } = useDialogs()
-
-const selection = ref([])
-
-const selectAll = computed({
-  get() {
-    if (participants.value.length === 0 || selection.value.length === 0) return false
-    if (participants.value.length === selection.value.length) return true
-    return null
+const fields = computed(() => [
+  {
+    name: 'name',
+    title: t('participant.name'),
+    cellClass: 'w-15ch text-left'
   },
-  set(value) {
-    selection.value = value ? participants.value.map(({ id }) => id) : []
+  {
+    name: 'patron',
+    title: t('participant.patron'),
+    cellClass: 'w-15ch text-left'
+  },
+  {
+    name: 'categories',
+    title: t('category.plural'),
+    cellClass: 'w-full text-left text-wrap'
   }
-})
+])
+
+const { participants, upsert } = useSplit()
+const { exec } = useDialogs()
 
 async function edit(participant = {}) {
   await exec(ParticipantDialog, { participant })
 }
 
-async function remove() {
-  if (selection.value.length === 0) return
+async function remove(selection) {
+  if (selection.length === 0) return
   const confirmed = await exec(ConfirmationDialog, {
-    message: t('participant.removal.confirmation', selection.value.length)
+    message: t('participant.removal.confirmation', selection.length)
   })
   if (!confirmed) return
-  await upsert({ participants: selection.value.map((id) => ({ id, removed: true })) })
-  selection.value = []
+  await upsert({ participants: selection.map((id) => ({ id, removed: true })) })
 }
 </script>

@@ -11,6 +11,7 @@ const thumbStyle = computed(() => ({
   borderRadius: '0px',
   backgroundColor: '#808080',
   width: '5px',
-  opacity: '0.5'
+  opacity: '0.5',
+  zIndex: 9998
 }))
 </script>

@@ -54,6 +54,7 @@
   "participation.none": "None",
   "receiver": "Receiver",
   "save": "Save",
+  "section.items.none": "No data",
   "sender": "Sender",
   "settlement.completed.checkbox": "Settlement completed (funds transferred)",
   "settlement.none": "No settlements",

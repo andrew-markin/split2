@@ -1,88 +1,77 @@
 <template>
-  <section>
-    <div class="row items-center muted-1">
-      <span class="text-h6 q-mr-xs q-my-sm">{{ $t('settlement.plural') }}</span>
-      <q-btn flat round icon="mdi-content-copy" @click="copy()" />
-    </div>
-    <q-markup-table separator="cell" flat bordered class="muted-1">
-      <thead>
-        <tr>
-          <th><q-checkbox v-model="selectAll" size="xs" :disable="settlements.length === 0" /></th>
-          <th class="w-15ch text-left">{{ $t('sender') }}</th>
-          <th class="w-15ch text-left">{{ $t('receiver') }}</th>
-          <th class="w-full text-left">{{ $t('participant.preferences') }}</th>
-          <th class="w-10ch text-right">{{ $t('amount') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(settlement, index) in settlements"
-          :key="index"
-          class="non-selectable cursor-pointer"
-          @click="edit(settlement)"
-        >
-          <td><q-checkbox v-model="selection" size="xs" :val="settlement" /></td>
-          <td class="text-left">
-            <participant-label :id="settlement.sender" />
-          </td>
-          <td class="text-left">
-            <participant-label :id="settlement.receiver" />
-          </td>
-          <td class="text-left text-wrap">
-            <participant-label :id="settlement.receiver">
-              <template #default="{ participant }">
-                {{ participant.preferences }}
-              </template>
-            </participant-label>
-          </td>
-          <td class="text-right">
-            {{ settlement.amount }}
-          </td>
-        </tr>
-        <tr v-if="settlements.length === 0">
-          <td colspan="5" class="muted-2 text-center q-td--no-hover">
-            {{ $t('settlement.none') }}
-          </td>
-        </tr>
-      </tbody>
-    </q-markup-table>
-  </section>
+  <split-section
+    :title="$t('settlement.plural')"
+    :fields="fields"
+    :items="settlements"
+    :item-key="null"
+    :no-data-label="$t('settlement.none')"
+    @edit="edit"
+  >
+    <template #buttons="{ selection }">
+      <q-btn flat round icon="mdi-content-copy" @click="copy(selection)" />
+    </template>
+    <template #sender="{ value }">
+      <participant-label :id="value" />
+    </template>
+    <template #receiver="{ value }">
+      <participant-label :id="value" />
+    </template>
+    <template #preferences="{ item: settlement }">
+      <participant-label :id="settlement.receiver">
+        <template #default="{ participant }">
+          {{ participant.preferences }}
+        </template>
+      </participant-label>
+    </template>
+  </split-section>
 </template>
 
 <script setup>
 import copyToClipboard from 'copy-to-clipboard'
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
 
 import ParticipantLabel from './ParticipantLabel.vue'
 import SettlementDialog from './SettlementDialog.vue'
+import SplitSection from './SplitSection.vue'
+
+const { t } = useI18n()
+
+const fields = computed(() => [
+  {
+    name: 'sender',
+    title: t('sender'),
+    cellClass: 'w-15ch text-left'
+  },
+  {
+    name: 'receiver',
+    title: t('receiver'),
+    cellClass: 'w-15ch text-left'
+  },
+  {
+    name: 'preferences',
+    title: t('participant.preferences'),
+    cellClass: 'w-full text-left text-wrap'
+  },
+  {
+    name: 'amount',
+    title: t('amount'),
+    cellClass: 'w-10ch text-right'
+  }
+])
 
 const { settlements, participantById } = useSplit()
 const { exec } = useDialogs()
-
-const selection = ref([])
-
-const selectAll = computed({
-  get() {
-    if (settlements.value.length === 0 || selection.value.length === 0) return false
-    if (settlements.value.length === selection.value.length) return true
-    return null
-  },
-  set(value) {
-    selection.value = value ? [...settlements.value] : []
-  }
-})
-
-watch(settlements, () => (selection.value = []))
 
 async function edit(settlement = {}) {
   await exec(SettlementDialog, { settlement })
 }
 
-async function copy() {
-  const scope = selection.value.length > 0 ? selection.value : settlements.value
+async function copy(selection) {
+  const scope = selection.length > 0 ? selection : settlements.value
   await copyToClipboard(
     scope
       .map((settlement) => {
