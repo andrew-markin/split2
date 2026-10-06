@@ -56,7 +56,7 @@
   "save": "Save",
   "section.items.none": "No data",
   "sender": "Sender",
-  "settlement.completed.checkbox": "Settlement completed (funds transferred)",
+  "settlement.completed.checkbox": "Funds transferred",
   "settlement.none": "No settlements",
   "settlement.plural": "Settlements",
   "settlement.transfer.comment.hint": "E.g. \"Sent via PayPal. Thanks!\"",

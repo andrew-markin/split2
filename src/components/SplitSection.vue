@@ -5,14 +5,14 @@
       <slot name="buttons" :selection></slot>
       <q-space />
       <q-checkbox
-        v-if="!$q.screen.gt.xs"
+        v-if="mobile"
         v-model="selectAll"
         size="sm"
         :disable="items.length === 0"
         class="mx-negative-md q-py-xs q-px-sm"
       />
     </block-container>
-    <block-container v-if="$q.screen.gt.xs" class="q-px-md">
+    <block-container v-if="desktop" class="q-px-md">
       <q-markup-table separator="cell" flat bordered class="muted-1">
         <thead>
           <tr>
@@ -74,6 +74,17 @@
             class="absolute-top-right q-py-xs q-px-sm"
           />
         </q-card>
+        <q-card
+          v-if="items.length === 0"
+          flat
+          bordered
+          square
+          class="relative-position borders-x-none"
+        >
+          <q-card-section class="muted-2 text-center no-wrap">
+            {{ noDataLabel ?? $t('section.items.none') }}
+          </q-card-section>
+        </q-card>
       </div>
     </block-container>
   </section>
@@ -83,6 +94,7 @@
 import { computed, ref, watch } from 'vue'
 
 import BlockContainer from '@/components/BlockContainer.vue'
+import { useScreen } from '@/composables/useScreen'
 
 const { title, items, itemKey } = defineProps({
   title: { type: String, default: undefined },
@@ -93,6 +105,8 @@ const { title, items, itemKey } = defineProps({
 })
 
 defineEmits(['edit'])
+
+const { mobile, desktop } = useScreen()
 
 const selection = ref([])
 

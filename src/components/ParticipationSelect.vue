@@ -1,19 +1,32 @@
 <template>
-  <div v-if="options.length > 0" class="column q-gutter-y-sm">
+  <div v-if="options.length > 0" class="column q-gutter-y-md">
     <div class="text-h6 muted-1">{{ title }}</div>
     <div v-for="option in options" :key="option.id" class="row q-col-gutter-x-sm items-center">
-      <q-checkbox v-model="option.active" :label="option.label" class="col-5 text-no-wrap" />
+      <q-checkbox
+        v-model="option.active"
+        class="non-selectable text-no-wrap"
+        :class="{
+          'col-6': desktop,
+          'col-12': mobile,
+          inactive: !option.active || option.rate === 0
+        }"
+      >
+        <span>{{ option.label }}</span>
+        <span class="q-ml-xs" :class="{ 'muted-3': option.rate === 100 }">
+          ({{ option.rate }}%)
+        </span>
+      </q-checkbox>
       <q-slider
         v-model="option.rate"
+        dense
         :min="0"
         :max="200"
         :step="5"
+        :markers="50"
         :disable="!option.active"
-        class="col"
+        class="col q-mr-lg"
+        :class="{ 'checkbox-size-margin': mobile }"
       />
-      <div class="col-1 text-body1 text-right q-mx-md" :class="{ 'muted-3': !option.active }">
-        {{ option.rate }}%
-      </div>
     </div>
   </div>
 </template>
@@ -22,8 +35,11 @@
 import { computed, ref, toRaw, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import { useScreen } from '@/composables/useScreen'
 import { useSplit } from '@/composables/useSplit'
 import { getComposedId } from '@/utils'
+
+const { desktop, mobile } = useScreen()
 
 const { participants, categories, participations } = useSplit()
 
@@ -110,3 +126,13 @@ const changes = computed(() => {
 
 watch(changes, () => emit('changes', changes.value))
 </script>
+
+<style scoped lang="scss">
+$checkbox-size: 42px;
+.checkbox-size-margin {
+  margin-left: $checkbox-size;
+}
+.inactive {
+  opacity: 0.5;
+}
+</style>

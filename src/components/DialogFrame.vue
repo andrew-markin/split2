@@ -1,13 +1,15 @@
 <template>
-  <q-card sclass="full-width" style="width: 600px; max-width: 80vw">
-    <q-card-section class="q-pb-none">
+  <q-card :class="{ 'card-desktop': desktop, 'full-width': mobile }">
+    <q-card-section class="row no-wrap items-center q-pb-none">
       <div class="text-h5 muted-1">{{ title }}</div>
+      <q-space />
+      <q-btn flat round icon="mdi-close" @click="cancel()" />
     </q-card-section>
     <q-card-section>
       <slot></slot>
       <div v-if="$slots.buttons" class="q-mt-lg">
-        <div class="row q-gutter-sm">
-          <q-space />
+        <div class="q-gutter-sm" :class="desktop ? ['row'] : ['column', 'reverse']">
+          <q-space v-if="desktop" />
           <slot name="buttons"></slot>
         </div>
       </div>
@@ -16,7 +18,19 @@
 </template>
 
 <script setup>
+import { useDialogs } from '@/composables/useDialogs'
+import { useScreen } from '@/composables/useScreen'
+
 defineProps({
   title: { type: String, default: undefined }
 })
+const { cancel } = useDialogs()
+const { desktop, mobile } = useScreen()
 </script>
+
+<style>
+.card-desktop {
+  width: 600px;
+  max-width: 80vw;
+}
+</style>

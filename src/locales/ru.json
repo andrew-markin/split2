@@ -56,7 +56,7 @@
   "save": "Сохранить",
   "section.items.none": "Нет данных",
   "sender": "Отправитель",
-  "settlement.completed.checkbox": "Взаиморасчет завершен (средства переведены)",
+  "settlement.completed.checkbox": "Средства переведены",
   "settlement.none": "Нет взаиморасчетов",
   "settlement.plural": "Взаиморасчеты",
   "settlement.transfer.comment.hint": "Например: \"Отправил через СБП. Спасибо!\"",
