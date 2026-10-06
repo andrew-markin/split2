@@ -1,5 +1,5 @@
 <template>
-  <q-menu>
+  <q-menu max-height="1024px">
     <q-list role="menu" style="min-width: 25ch">
       <q-item v-close-popup clickable @click="copyLink()">
         <q-item-section side>
