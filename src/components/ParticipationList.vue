@@ -1,6 +1,6 @@
 <template>
   <template v-if="labels.length > 0">
-    <span v-for="(label, index) in labels" :key="index" class="label inline-block q-mr-xs">
+    <span v-for="(label, index) in labels" :key="index" class="inline-block q-mr-xs">
       {{ label }}
     </span>
   </template>
@@ -35,14 +35,3 @@ const labels = computed(() => {
   return result.map(({ name, rate }) => (rate === 100 ? name : `${name} (${rate}%)`)).sort()
 })
 </script>
-
-<style scoped lang="scss">
-.label {
-  &:not(:last-child)::after {
-    content: ', ';
-  }
-  &:hover {
-    text-decoration: underline;
-  }
-}
-</style>
