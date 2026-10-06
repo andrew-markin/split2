@@ -18,7 +18,11 @@
       />
     </template>
     <template #patron="{ value }">
-      <participant-label :id="value" :placeholder="$t('participant.patron.none')" />
+      <participant-label
+        :id="value"
+        :placeholder="$t('participant.patron.none')"
+        placeholder-class="text-special"
+      />
     </template>
     <template #categories="{ item: participant }">
       <participation-list :participant="participant.id" />

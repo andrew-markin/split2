@@ -1,6 +1,6 @@
 <template>
   <span v-if="label">{{ label }}</span>
-  <span v-else-if="placeholder" class="muted-3">{{ placeholder }}</span>
+  <span v-else-if="placeholder" class="text-special">{{ placeholder }}</span>
 </template>
 
 <script setup>

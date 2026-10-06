@@ -20,6 +20,7 @@
         outlined
         stack-label
         :label="$t('participant.preferences')"
+        :placeholder="$t('participant.preferences.none')"
         readonly
       />
       <q-input :model-value="form.amount" outlined stack-label :label="$t('amount')" readonly />

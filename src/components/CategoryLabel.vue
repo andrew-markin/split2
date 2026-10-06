@@ -4,7 +4,7 @@
       <span>{{ category.name }}</span>
     </slot>
   </template>
-  <span v-else-if="placeholder" class="muted-3">{{ placeholder }}</span>
+  <span v-else-if="placeholder" :class="placeholderClass">{{ placeholder }}</span>
 </template>
 
 <script setup>
@@ -16,7 +16,8 @@ defineOptions({ inheritAttrs: false })
 
 const { id } = defineProps({
   id: { type: String, default: undefined },
-  placeholder: { type: String, default: undefined }
+  placeholder: { type: String, default: undefined },
+  placeholderClass: { type: String, default: 'muted-3' }
 })
 
 const { categoryById } = useSplit()

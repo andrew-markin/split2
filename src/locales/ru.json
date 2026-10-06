@@ -47,6 +47,7 @@
   "participant.patron": "Кто платит",
   "participant.plural": "Участники",
   "participant.preferences.hint": "Например: \"Через СБП по номеру +79200165344\"",
+  "participant.preferences.none": "Отсутствуют",
   "participant.preferences.undefined": "Не определены",
   "participant.preferences": "Предпочтения по переводу",
   "participant.removal.confirmation": "Вы уверены, что хотите удалить выбранного участника? | Вы уверены, что хотите удалить выбранных участников?",

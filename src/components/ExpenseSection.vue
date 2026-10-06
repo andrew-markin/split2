@@ -21,10 +21,17 @@
       <date-label :value :placeholder="$t('date.undefined')" />
     </template>
     <template #category="{ value }">
-      <category-label :id="value" :placeholder="$t('category.common')" />
+      <category-label
+        :id="value"
+        :placeholder="$t('category.common')"
+        placeholder-class="text-special"
+      />
     </template>
     <template #payer="{ value }">
       <participant-label :id="value" />
+    </template>
+    <template #amount="{ value }">
+      <amount-label :value />
     </template>
   </split-section>
 </template>
@@ -36,6 +43,7 @@ import { useI18n } from 'vue-i18n'
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
 
+import AmountLabel from './AmountLabel.vue'
 import CategoryLabel from './CategoryLabel.vue'
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import DateLabel from './DateLabel.vue'

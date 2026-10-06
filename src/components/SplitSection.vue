@@ -61,7 +61,7 @@
         >
           <q-card-section class="column no-wrap q-gutter-xs">
             <div v-for="field in fields" :key="field.name">
-              <span class="text-bold q-mr-sm">{{ field.title }}:</span>
+              <span class="text-weight-medium q-mr-xs">{{ field.title }}:</span>
               <slot :name="field.name" :item :value="item[field.name]">
                 {{ item[field.name] }}
               </slot>

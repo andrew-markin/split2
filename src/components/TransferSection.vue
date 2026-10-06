@@ -26,6 +26,9 @@
     <template #receiver="{ value }">
       <participant-label :id="value" />
     </template>
+    <template #amount="{ value }">
+      <amount-label :value />
+    </template>
   </split-section>
 </template>
 
@@ -36,6 +39,7 @@ import { useI18n } from 'vue-i18n'
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
 
+import AmountLabel from './AmountLabel.vue'
 import ConfirmationDialog from './ConfirmationDialog.vue'
 import DateLabel from './DateLabel.vue'
 import ParticipantLabel from './ParticipantLabel.vue'

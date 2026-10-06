@@ -19,9 +19,13 @@
     <template #preferences="{ item: settlement }">
       <participant-label :id="settlement.receiver">
         <template #default="{ participant }">
-          {{ participant.preferences }}
+          <span v-if="participant.preferences">{{ participant.preferences }}</span>
+          <span v-else class="text-special">{{ $t('participant.preferences.none') }}</span>
         </template>
       </participant-label>
+    </template>
+    <template #amount="{ value }">
+      <amount-label :value />
     </template>
   </split-section>
 </template>
@@ -34,6 +38,7 @@ import { useI18n } from 'vue-i18n'
 import { useDialogs } from '@/composables/useDialogs'
 import { useSplit } from '@/composables/useSplit'
 
+import AmountLabel from './AmountLabel.vue'
 import ParticipantLabel from './ParticipantLabel.vue'
 import SettlementDialog from './SettlementDialog.vue'
 import SplitSection from './SplitSection.vue'

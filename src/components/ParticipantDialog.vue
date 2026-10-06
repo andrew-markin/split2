@@ -28,6 +28,7 @@
         stack-label
         :label="$t('participant.preferences')"
         :hint="$t('participant.preferences.hint')"
+        :placeholder="$t('participant.preferences.none')"
         :maxlength="64"
         lazy-rules="ondemand"
         :rules="preferencesRules"

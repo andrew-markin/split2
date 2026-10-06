@@ -47,6 +47,7 @@
   "participant.patron": "Who pays",
   "participant.plural": "Participants",
   "participant.preferences.hint": "E.g. \"To my PayPal account james\\@gmail.com\"",
+  "participant.preferences.none": "None",
   "participant.preferences.undefined": "Undefined",
   "participant.preferences": "Transfer preferences",
   "participant.removal.confirmation": "Are you sure you want to remove selected participant? | Are you sure you want to remove selected participants?",

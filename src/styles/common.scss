@@ -35,6 +35,34 @@
   }
 }
 
+.text-amount {
+  color: $amount-color;
+  .body--dark & {
+    color: $amount-dark-color;
+  }
+}
+
+.text-special {
+  color: $special-color;
+  .body--dark & {
+    color: $special-dark-color;
+  }
+}
+
+.text-cold {
+  color: $cold-color;
+  .body--dark & {
+    color: $cold-dark-color;
+  }
+}
+
+.text-hot {
+  color: $hot-color;
+  .body--dark & {
+    color: $hot-dark-color;
+  }
+}
+
 ::selection {
   background: $primary;
   color: #fff;

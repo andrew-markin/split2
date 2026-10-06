@@ -11,10 +11,7 @@
           inactive: !option.active || option.rate === 0
         }"
       >
-        <span>{{ option.label }}</span>
-        <span class="q-ml-xs" :class="{ 'muted-3': option.rate === 100 }">
-          ({{ option.rate }}%)
-        </span>
+        <participation-label :name="option.name" :rate="option.rate" show-rate />
       </q-checkbox>
       <q-slider
         v-model="option.rate"
@@ -38,6 +35,8 @@ import { useI18n } from 'vue-i18n'
 import { useScreen } from '@/composables/useScreen'
 import { useSplit } from '@/composables/useSplit'
 import { getComposedId } from '@/utils'
+
+import ParticipationLabel from './ParticipationLabel.vue'
 
 const { desktop, mobile } = useScreen()
 
@@ -79,7 +78,7 @@ watch(
             base,
             participant: participantId,
             category: category.id,
-            label: category.name,
+            name: category.name,
             active: base?.active ?? false,
             rate: base?.rate === undefined ? 100 : base.rate
           }
@@ -96,7 +95,7 @@ watch(
             base,
             participant: participant.id,
             category: categoryId,
-            label: participant.name,
+            name: participant.name,
             active: base?.active || false,
             rate: base?.rate === undefined ? 100 : base.rate
           }
