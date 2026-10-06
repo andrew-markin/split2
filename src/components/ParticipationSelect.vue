@@ -19,7 +19,6 @@
         :min="0"
         :max="200"
         :step="5"
-        :markers="50"
         :disable="!option.active"
         class="col q-mr-lg"
         :class="{ 'checkbox-size-margin': mobile }"
