@@ -23,7 +23,7 @@ const datasetSchema = z.record(
       })
       .catchall(
         z.strictObject({
-          value: z.unknown(),
+          value: z.unknown().optional(),
           nonce: z.string().regex(/^[0-9A-Za-z]{28}$/)
         })
       )
