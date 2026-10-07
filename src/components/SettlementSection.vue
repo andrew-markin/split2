@@ -8,7 +8,7 @@
     @edit="edit"
   >
     <template #buttons="{ selection }">
-      <q-btn flat round icon="mdi-content-copy" @click="copy(selection)" />
+      <wink-button flat round icon="mdi-content-copy" @click="copy(selection)" />
     </template>
     <template #sender="{ value }">
       <participant-label :id="value" />
@@ -42,6 +42,7 @@ import AmountLabel from './AmountLabel.vue'
 import ParticipantLabel from './ParticipantLabel.vue'
 import SettlementDialog from './SettlementDialog.vue'
 import SplitSection from './SplitSection.vue'
+import WinkButton from './WinkButton.vue'
 
 const { t } = useI18n()
 
