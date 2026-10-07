@@ -326,11 +326,29 @@ function useContext() {
 
   const modified = computed(() => !!changed.value)
 
+  function getLocalProperyStorageKey(name) {
+    return `split:${anchor}:property:${name}`
+  }
+
+  const locals = {
+    set(name, value) {
+      if (!anchor) return
+      const storageKey = getLocalProperyStorageKey(name)
+      if (value) storage.set(storageKey, value)
+      else storage.remove(storageKey)
+    },
+    get(name) {
+      if (!anchor) return
+      return storage.get(getLocalProperyStorageKey(name))
+    }
+  }
+
   return {
     clone,
     connect,
     constrain,
     find,
+    locals,
     modified,
     select,
     upsert
