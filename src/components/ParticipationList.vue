@@ -8,7 +8,7 @@
       <participation-label :name="participation.name" :rate="participation.rate" />
     </span>
   </template>
-  <span v-else class="muted-3">{{ $t('participation.none') }}</span>
+  <span v-else class="text-special">{{ $t('participation.none') }}</span>
 </template>
 
 <script setup>
