@@ -1,6 +1,7 @@
 import { gunzip, gzip } from 'fflate'
 
 const base62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+const base62Map = new Map(Array.from(base62).map((char, code) => [char, code]))
 
 const encoder = new TextEncoder()
 const decoder = new TextDecoder()
@@ -15,8 +16,25 @@ function getRandomBase62Key(length) {
   return randomInts.map((int) => base62[int % 62]).join('')
 }
 
-export function getRandomSecret() {
-  return getRandomBase62Key(43)
+function getKeyChecksum(key) {
+  let result = 0
+  for (let i = 0; i < key.length; i++) {
+    result += base62Map.get(key[i]) || 0
+  }
+  return result % 62
+}
+
+export function getRandomSecret(version = 2) {
+  const key = getRandomBase62Key(43)
+  const signature = (getKeyChecksum(key) + version) % 62
+  return key + base62[signature]
+}
+
+export function getSecretVersion(secret) {
+  if (secret?.length !== 44) return
+  const key = secret.slice(0, -1)
+  const signature = secret.slice(-1)
+  return ((base62Map.get(signature) || 0) + 62 - getKeyChecksum(key)) % 62
 }
 
 export function getRandomId() {
