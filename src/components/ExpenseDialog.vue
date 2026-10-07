@@ -23,7 +23,11 @@
         lazy-rules="ondemand"
         :rules="payerRules"
         no-error-icon
-      />
+      >
+        <template #append>
+          <wink-button round flat icon="mdi-pin-outline" @click.stop.prevent="pinPayer()" />
+        </template>
+      </participant-select>
       <q-input
         v-model.trim="form.amount"
         outlined
@@ -61,6 +65,7 @@ import DateInput from './DateInput.vue'
 import DialogFrame from './DialogFrame.vue'
 import LongTextInput from './LongTextInput.vue'
 import ParticipantSelect from './ParticipantSelect.vue'
+import WinkButton from './WinkButton.vue'
 
 const { expense } = defineProps({
   expense: { type: Object, default: () => {} }
@@ -71,8 +76,12 @@ const emit = defineEmits(['close'])
 const { t } = useI18n()
 const { amountSchema, stringSchema } = useSchemas()
 
+const { locals, participantById, upsert } = useSplit()
+
+const pinnedPayer = participantById(locals.get('payer'))?.value?.id
+
 const { form, changes, changed } = useForm(
-  { description: '', amount: '', ...expense },
+  { description: '', payer: pinnedPayer, amount: '', ...expense },
   {
     transform(form) {
       if (form.amount) form.amount = Number(form.amount).toFixed(2)
@@ -86,7 +95,9 @@ const descriptionRules = [useValidator(descriptionSchema)]
 const payerRules = [(value) => !!value || t('expense.payer.required.error')]
 const amountRules = [useValidator(amountSchema)]
 
-const { upsert } = useSplit()
+function pinPayer() {
+  locals.set('payer', form.payer)
+}
 
 async function submit() {
   if (!changed.value) return

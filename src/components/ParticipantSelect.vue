@@ -12,11 +12,14 @@
         </q-item-section>
       </q-item>
     </template>
+    <template v-for="(_, slotName) in notUsedSlots" :key="slotName" #[slotName]="slotProps">
+      <slot :name="slotName" v-bind="slotProps || {}"></slot>
+    </template>
   </q-select>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 
 import { useSplit } from '@/composables/useSplit'
 
@@ -42,5 +45,13 @@ const options = computed(() => {
     })
   }
   return result
+})
+
+const slots = useSlots()
+
+const notUsedSlots = computed(() => {
+  // eslint-disable-next-line no-unused-vars
+  const { selected, option, ...rest } = slots
+  return rest
 })
 </script>
