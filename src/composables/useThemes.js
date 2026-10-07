@@ -2,7 +2,7 @@ import { useQuasar } from 'quasar'
 
 import storage from '@/storage'
 
-const SPLIT_IS_DARK_STORAGE_KEY = 'dark'
+const SPLIT_IS_DARK_STORAGE_KEY = 'split:dark'
 
 export function useThemes() {
   const $q = useQuasar()

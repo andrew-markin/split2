@@ -60,7 +60,7 @@ const navigatorLocale = trimLocale(
   navigator.languages !== undefined ? navigator.languages[0] : navigator.language
 )
 
-const LOCALE_STORAGE_KEY = 'locale'
+const LOCALE_STORAGE_KEY = 'split:locale'
 const defaultLocale = storage.get(LOCALE_STORAGE_KEY) || navigatorLocale || 'en'
 
 const i18n = createI18n({

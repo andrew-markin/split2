@@ -90,7 +90,7 @@ function useContext() {
       version.value = undefined
       dataset.value = {}
       datasetIndex = {}
-      const state = storage.get(`split:state:${anchor}`) ?? {}
+      const state = storage.get(`split:${anchor}:state`) ?? {}
       merge(state.dataset)
       version.value = state.version
       changed.value = state.changed
@@ -105,7 +105,7 @@ function useContext() {
 
   function save() {
     if (!anchor) return
-    storage.set(`split:state:${anchor}`, {
+    storage.set(`split:${anchor}:state`, {
       dataset: dataset.value,
       version: version.value,
       changed: changed.value
@@ -114,7 +114,7 @@ function useContext() {
 
   async function clone(secret) {
     const anchor = await getStorageAnchor(secret)
-    storage.set(`split:state:${anchor}`, {
+    storage.set(`split:${anchor}:state`, {
       dataset: dataset.value,
       changed: Date.now()
     })

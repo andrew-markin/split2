@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Split</title>
     <script>
-      const darkSaved = localStorage.getItem('dark')
+      const darkSaved = localStorage.getItem('split:dark')
       const dark = darkSaved
         ? darkSaved === 'true'
         : window.matchMedia?.('(prefers-color-scheme: dark)').matches
