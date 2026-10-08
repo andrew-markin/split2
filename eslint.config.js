@@ -29,7 +29,9 @@ export default defineConfig([
     settings: {
       'import-x/resolver': {
         typescript: true,
-        node: true
+        node: {
+          extensions: ['.js', '.json']
+        }
       }
     },
     plugins: {
@@ -43,7 +45,19 @@ export default defineConfig([
       'import-x/no-duplicates': 'error',
       'import-x/no-dynamic-require': 'error',
       'import-x/no-nodejs-modules': 'error',
+      'import-x/no-unresolved': ['error', { ignore: ['^virtual:'] }],
       'vue/html-self-closing': 'off'
+    }
+  },
+  {
+    files: ['plugins/**/*.js', 'vite.config.js', '*.config.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    },
+    rules: {
+      'import-x/no-nodejs-modules': 'off'
     }
   }
 ])

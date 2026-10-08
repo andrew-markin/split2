@@ -10,6 +10,7 @@ import '@/styles/common.scss'
 
 import { Dark, Meta, Quasar } from 'quasar'
 import quasarMdiIconSet from 'quasar/icon-set/mdi-v7'
+import quasarLangsRequired from 'virtual:quasar-langs-required'
 import { createApp, watch } from 'vue'
 import { createI18n } from 'vue-i18n'
 
@@ -38,16 +39,11 @@ Object.keys(localesAvailable).forEach((path) => {
   }
 })
 
-const quasarLangsAvailable = import.meta.glob('../node_modules/quasar/lang/*.js', { eager: true })
 const quasarLangsMap = {}
 
-Object.keys(quasarLangsAvailable).forEach((path) => {
-  const matched = path.match(/\/([^/]+)\.js$/)
-  if (matched && matched.length > 1) {
-    const quasarLangName = matched[1]
-    if (quasarLangNamesRequired.has(quasarLangName)) {
-      quasarLangsMap[quasarLangName] = quasarLangsAvailable[path].default
-    }
+Object.keys(quasarLangsRequired).forEach((name) => {
+  if (quasarLangNamesRequired.has(name)) {
+    quasarLangsMap[name] = quasarLangsRequired[name]
   }
 })
 

@@ -1,4 +1,3 @@
-/* eslint-disable import-x/no-nodejs-modules */
 import { fileURLToPath, URL } from 'node:url'
 
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
@@ -6,6 +5,8 @@ import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import { dirname, resolve } from 'path'
 import { defineConfig } from 'vite'
+
+import quasarLangsRequiredPlugin from './plugins/quasar-langs-required.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -27,7 +28,8 @@ export default defineConfig({
     VueI18nPlugin({
       include: resolve(__dirname, './src/locales/**'),
       runtimeOnly: false
-    })
+    }),
+    quasarLangsRequiredPlugin()
   ],
   resolve: {
     alias: {
