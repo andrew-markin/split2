@@ -1,5 +1,5 @@
 import { useI18n } from 'vue-i18n'
-import { z } from 'zod'
+import * as z from 'zod'
 
 export function useSchemas() {
   const { t } = useI18n()

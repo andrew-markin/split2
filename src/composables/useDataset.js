@@ -1,6 +1,6 @@
 import { Mutex } from 'async-mutex'
 import { computed, ref, shallowRef, toRaw, triggerRef, watch } from 'vue'
-import z from 'zod'
+import * as z from 'zod'
 
 import storage from '@/storage'
 import { getCipher, getNonce, getRandomId, sortByFields } from '@/utils'
