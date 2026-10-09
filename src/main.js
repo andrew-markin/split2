@@ -34,7 +34,7 @@ Object.keys(localesAvailable).forEach((path) => {
     const localeName = matched[1]
     const localeContent = localesAvailable[path].default
     messages[localeName] = localeContent
-    const quasarLangName = localeContent['#quasar.lang'].body?.static
+    const quasarLangName = localeContent['#quasar.lang']
     if (quasarLangName) quasarLangNamesRequired.add(quasarLangName)
   }
 })
