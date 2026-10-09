@@ -8,7 +8,13 @@
     @edit="edit"
   >
     <template #buttons="{ selection }">
-      <wink-button flat round icon="mdi-content-copy" @click="copy(selection)" />
+      <wink-button
+        v-if="settlements.length > 0"
+        flat
+        round
+        icon="mdi-content-copy"
+        @click="copy(selection)"
+      />
     </template>
     <template #sender="{ value }">
       <participant-label :id="value" />
