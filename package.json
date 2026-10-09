@@ -12,7 +12,9 @@
     "lint": "run-s lint:*",
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/"
+    "format": "prettier --write --experimental-cli src/",
+    "audit": "npm audit --omit=dev",
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "@quasar/extras": "^2.1.0",
@@ -48,6 +50,6 @@
   "allowScripts": {
     "unrs-resolver@1.12.2": true,
     "@parcel/watcher@2.6.0": true,
-    "esbuild@0.25.12": true
+    "esbuild@0.28.2": true
   }
 }
