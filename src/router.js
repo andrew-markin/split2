@@ -16,10 +16,10 @@ const router = createRouter({
     },
     {
       path: '/:key([a-zA-Z0-9]{43})',
-      redirect: (to) => {
+      beforeEnter: (to) => {
         window.location.replace(`https://split-one.mayfleet.com/#/${to.params.key}`)
-        return ''
-      }
+      },
+      component: { template: '<div></div>' }
     },
     {
       path: '/:pathMatch(.*)*',
